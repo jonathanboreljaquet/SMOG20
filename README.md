@@ -48,4 +48,4 @@ Projet permettant aux
 3. Rendez vous à l'adresse http://localhost:80/key pour récupérer une clé aléatoire
 
 4. Utilisez la clé que vous venez de récupérer comme nouvelle valeur pour la variable **APP_KEY** du fichier **.env**
-5. Renseignez les informations de connexion à la base de données dans les variables correspondantes _(DB_...)_ du fichier **.env**
+5. Renseignez les informations de connexion à la base de données dans les variables correspondantes _(DB\_...)_ du fichier **.env**
