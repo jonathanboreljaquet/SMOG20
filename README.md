@@ -34,17 +34,17 @@ Projet permettant aux
 * NodeJS 14.2
 ## Installation
 
-1. Copier le .env.example dans un fichier nommé .env
+1. Copier le contenu du fichier .env.example dans un nouveau fichier nommé .env
 
-Exécutez les commandes :
-2. composer install
+2. Exécutez les commandes :
+    1. composer install
 
-3. npm install
+    2. npm install
 
-4. npm run prod
+    3. npm run prod
 
-5. npm run serve
+    4. npm run serve
 
-6. Récupérer la clef sur la route /key
+    5. Récupérer la clef sur la route /key
 
-7. Rajouter la clef dans la variable APP_KEY dans le fichier .env
+    6. Rajouter la clef dans la variable APP_KEY dans le fichier .env
