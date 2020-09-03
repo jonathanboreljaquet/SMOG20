@@ -1,3 +1,5 @@
 import '../scss/style.scss';
+import Engine from './libraries/engine';
 
-console.log('ok');
+let canvas = document.getElementById('renderCanvas') as HTMLCanvasElement;
+let engine = new Engine(canvas);
