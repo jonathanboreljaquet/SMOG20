@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+      "noEmitOnError": true,
+      "target": "es5",
+      "lib": ["DOM", "ESNext", "DOM.Iterable", "ScriptHost", "es2015.promise"],
+      "outDir": "public"
+    },
+    "include": [
+      "src/ts/*"
+    ],
+    "types": [
+        "babylonjs"
+    ],
+}
