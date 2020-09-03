@@ -34,7 +34,7 @@ Projet permettant aux
 * NodeJS 14.2
 ## Installation
 
-1. Copier le contenu du fichier .env.example dans un nouveau fichier nommé .env
+1. Copier le contenu du fichier **.env.example** dans un nouveau fichier nommé **.env**
 
 2. Exécutez les commandes :
     1. composer install
