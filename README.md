@@ -34,17 +34,18 @@ Projet permettant aux
 * NodeJS 14.2
 ## Installation
 
-1. Copier le contenu du fichier **.env.example** dans un nouveau fichier nommé **.env**
+1. Copiez le contenu du fichier **.env.example** dans un nouveau fichier nommé **.env**
 
 2. Exécutez les commandes :
-    1. composer install
+    1. `composer install`
 
-    2. npm install
+    2. `npm install`
 
-    3. npm run prod
+    3. `npm run prod`
 
-    4. npm run serve
+    4. `npm run serve` _(Si vous ne disposez pas d'un serveur local)_
 
-    5. Récupérer la clef sur la route /key
+3. Rendez vous à l'adresse http://localhost:80/key pour récupérer une clé aléatoire
 
-    6. Rajouter la clef dans la variable APP_KEY dans le fichier .env
+4. Utilisez la clé que vous venez de récupérer comme nouvelle valeur pour la variable **APP_KEY** du fichier **.env**
+5. Renseignez les informations de connexion à la base de données dans les variables correspondantes _(DB_...)_ du fichier **.env**
