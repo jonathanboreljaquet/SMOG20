@@ -36,15 +36,15 @@ Projet permettant aux
 
 1. Copier le .env.example dans un fichier nommé .env
 
-* Exécutez les commandes :
-  2. composer install
+Exécutez les commandes :
+2. composer install
 
-  3. npm install
+3. npm install
 
-  4. npm run prod
+4. npm run prod
 
-  5. npm run serve
+5. npm run serve
 
-  6. Récupérer la clef sur la route /key
+6. Récupérer la clef sur la route /key
 
-  7. Rajouter la clef dans la variable APP_KEY dans le fichier .env
+7. Rajouter la clef dans la variable APP_KEY dans le fichier .env
