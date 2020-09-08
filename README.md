@@ -4,7 +4,7 @@
 #### Bauduccio Lorenzo, <lorenzo.bdcc@eduge.ch>
 #### Stahli Jules, <jules.sthl@eduge.ch>
 #### Borel-Jaquet Jonathan, <jonathan.brljq@eduge.ch>
-## Date du projet
+## Jalons
 * Date de début : 27.08.2020
 * Date de fin   : 26.11.2020
 ## Description
