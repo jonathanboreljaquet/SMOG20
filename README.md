@@ -56,8 +56,8 @@ Projet permettant aux
 
 `composer install`: Install les dépendances PHP
 
-`npm run prod`: Compile le code source (typescript) de l 'application avec minification et norme ES5
+`npm run prod`: Compile le code source (typescript + scss) de l 'application avec minification et norme ES5
 
-`npm run dev`: Compile le code source (typescript) de l'application avec sourcemaps et watcher
+`npm run dev`: Compile le code source (typescript + scss) de l'application avec sourcemaps et watcher
 
 _`npm run serve`: Lance un mini serveur PHP local dans projet_
