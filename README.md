@@ -60,4 +60,4 @@ Projet permettant aux
 
 `npm run dev`: Compile le code source (typescript + scss) de l'application avec sourcemaps et watcher
 
-_`npm run serve`: Lance un mini serveur PHP local dans projet_
+_`npm run serve`: Lance un mini serveur PHP local pour le projet_
