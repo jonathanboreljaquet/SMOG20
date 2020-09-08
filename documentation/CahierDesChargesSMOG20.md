@@ -4,7 +4,7 @@
 
 ### Description
 
-Ce travail de semestre à pour but de simuler un travail de diplôme de fin d'année. Le but du travail est de produire une application semblable à SMOG15.
+Ce travail de semestre à pour but de simuler un travail de diplôme de fin d'année. ~Le but du travail est de produire une application semblable à SMOG15.~
 
 ### Spécifications
 
@@ -14,15 +14,37 @@ Premièrement l'application permettra aux élèves
 
 ### Environnement
 
-* Ordinateur de type PC
-* Système d'exploitation : Windows 10
-* Outils de travail : Laragon
-* Langage de programmation : PHP TypeScript 
-* Librairie utilisé : Babylon.js, Lumen
-* Traitement de texte : Typora
+#### Matériel
+
+* Ordinateur école (Windows 10)
+* [Caméra 360°](https://www.insta360.com/fr/product/insta360-onex)
+
+#### Logiciels
+
+* [Blender](https://www.blender.org/)
+* [Visual Studio Code](https://code.visualstudio.com/) _(ou autre IDE)_
+* [Insta360 Studio 2020](https://www.insta360.com/fr/download/insta360-onex)
+* [Suite Office](https://www.office.com/)
+* [Laragon](https://laragon.org/)
+* [Typora](https://typora.io/)
+
+#### Langages + librairies
+
+* Typescript
+    * [Webpack](https://webpack.js.org/)
+    * [BabylonJS](https://www.babylonjs.com/)
+* PHP
+    * [Lumen](https://lumen.laravel.com/)
 
 ### Livrable
 
+* Code source
+* Documentation technique
+* Planning prévisionnel
+* Planning effectif
+* Journal de bord
+* Affiche (format A2)
+    
 ### Équipe
 
 Bauduccio Lorenzo, <lorenzo.bdcc@eduge.ch>
