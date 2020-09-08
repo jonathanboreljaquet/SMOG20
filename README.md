@@ -49,3 +49,15 @@ Projet permettant aux
 
 4. Utilisez la clé que vous venez de récupérer comme nouvelle valeur pour la variable **APP_KEY** du fichier **.env**
 5. Renseignez les informations de connexion à la base de données dans les variables correspondantes _(DB\_...)_ du fichier **.env**
+
+## Commandes
+
+`npm install` / `npm i`: Install les dépendances javascript/typescript
+
+`composer install`: Install les dépandances PHP
+
+`npm run prod`: Compile le code source (typescript) de l 'application avec minification et norme ES5
+
+`npm run dev`: Compile le code source (typescript) de l'application avec sourcemaps et watcher
+
+_`npm run serve`: Lance un mini serveur PHP local dans projet_
