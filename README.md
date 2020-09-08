@@ -52,9 +52,9 @@ Projet permettant aux
 
 ## Commandes
 
-`npm install` / `npm i`: Install les dépendances javascript/typescript
+`npm install`: Install les dépendances javascript/typescript
 
-`composer install`: Install les dépandances PHP
+`composer install`: Install les dépendances PHP
 
 `npm run prod`: Compile le code source (typescript) de l 'application avec minification et norme ES5
 
