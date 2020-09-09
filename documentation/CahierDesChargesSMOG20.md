@@ -1,22 +1,26 @@
 # Cahier des charges
 
-## Travail de semestre SMOG 20
+## Travail de semestre SMOG20
 
 ### Description
 
-Ce travail de semestre à pour but de simuler un travail de diplôme de fin d'année. ~Le but du travail est de produire une application semblable à SMOG15.~
+Ce travail de semestre à pour but de simuler un travail de diplôme de fin d'année. SMOG20 est une application web permettant une visualisation 3D des bâtiments du CFPT.
 
 ### Spécifications
 
 L'application consistera à visualiser une modélisation 3D du bâtiment du CFPT-I de Rhône, de ces étages ainsi que ces différentes salles avec une visualisation 360° de celle-ci.
 
-Premièrement l'application permettra aux élèves 
+Premièrement l'application permettra aux utilisateurs de visualiser l'horaire de chaque salle depuis une liste.
+
+### Améliorations possibles
+
+L'application permettra aux élèves d'accéder à leur propre horaire et depuis celui-ci, il aura le choix de visualiser toutes les salles de son horaire.
 
 ### Environnement
 
 #### Matériel
 
-* Ordinateur école (Windows 10)
+* Ordinateurs école (Windows 10)
 * [Caméra 360°](https://www.insta360.com/fr/product/insta360-onex)
 
 #### Logiciels
