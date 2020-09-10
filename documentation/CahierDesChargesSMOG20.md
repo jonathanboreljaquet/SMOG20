@@ -16,6 +16,10 @@ Premièrement l'application permettra aux utilisateurs de visualiser l'horaire d
 
 L'application permettra aux élèves d'accéder à leur propre horaire et depuis celui-ci, il aura le choix de visualiser toutes les salles de son horaire.
 
+### Méthodologie
+
+Scrum
+
 ### Environnement
 
 #### Matériel
