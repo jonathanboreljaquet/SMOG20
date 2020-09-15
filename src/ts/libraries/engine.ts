@@ -1,6 +1,7 @@
 import * as BABYLON from 'babylonjs';
 import Scene from '../scenes/scene';
 import MainScene from '../scenes/main_scene';
+import SecondaryScene from '../scenes/secondary_scene';
 
 export default class Engine{
     private engine: BABYLON.Engine;
@@ -16,6 +17,10 @@ export default class Engine{
             this.currentScene.render();
         });
     }
+    public changeScene(scene: Scene): void{
+        this.currentScene = scene;
+    }
+    
 
     private linkEvents(): void{
         window.addEventListener('resize', () => {
