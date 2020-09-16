@@ -11,4 +11,7 @@ export default class Scene {
     public render(): void{
         this.scene.render();
     }
+    public dispose(): void{
+        this.scene.dispose();
+    }
 }

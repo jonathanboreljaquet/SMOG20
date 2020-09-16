@@ -1,5 +1,6 @@
 import * as BABYLON from 'babylonjs';
 import Scene from './scene';
+import * as tsEvents from "ts-events";
 
 // Constants
 
@@ -20,7 +21,7 @@ export default class SecondaryScene extends Scene{
 
     // Constructor
 
-    public constructor(engine: BABYLON.Engine, canvas: HTMLCanvasElement){
+    public constructor(engine: BABYLON.Engine, canvas: HTMLCanvasElement,event: tsEvents.SyncEvent<Scene>){
         super(new BABYLON.Scene(engine));
         this.scene.clearColor = SCENE_DEFAULT_BACKCOLOR;
 
@@ -44,7 +45,7 @@ export default class SecondaryScene extends Scene{
         }, this.scene);
         sphere.actionManager = new BABYLON.ActionManager(this.scene);
         sphere.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger, function () {
-            alert("im a sphere");
+            event.post(this);
         }));
         sphere.position = BABYLON.Vector3.Zero();
     }

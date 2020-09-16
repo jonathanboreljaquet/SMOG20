@@ -1,5 +1,7 @@
 import * as BABYLON from 'babylonjs';
 import Scene from './scene';
+import * as tsEvents from "ts-events";
+
 
 // Constants
 
@@ -12,14 +14,13 @@ const CAMERA_DEFAULT_ALPHA: number = Math.PI / 1.5;
 const CAMERA_DEFAULT_BETA: number = Math.PI / 2.4;
 const CAMERA_DEFAULT_RADIUS: number = 10;
 
-
 export default class MainScene extends Scene{
     // Fields
     private camera: BABYLON.ArcRotateCamera;
     private light: BABYLON.HemisphericLight;
 
     // Constructor
-    public constructor(engine: BABYLON.Engine, canvas: HTMLCanvasElement){
+    public constructor(engine: BABYLON.Engine, canvas: HTMLCanvasElement, event: tsEvents.SyncEvent<Scene>){
         super(new BABYLON.Scene(engine));
         this.scene.clearColor = SCENE_DEFAULT_BACKCOLOR;
 
@@ -45,11 +46,10 @@ export default class MainScene extends Scene{
         }, this.scene);
         box.actionManager = new BABYLON.ActionManager(this.scene);
         box.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger, function () {
-            alert("im a box");
+            event.post(this);
         }));
         box.position = BABYLON.Vector3.Zero();
     }
-    //private ChangeScene(scene :Scene): void{
         
     
     // Methods
