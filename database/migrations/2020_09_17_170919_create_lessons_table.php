@@ -20,13 +20,13 @@ class CreateLessonsTable extends Migration
             $table->tinyInteger('is_semester');
             $table->tinyInteger('period_year');
             $table->unsignedBigInteger('classroom');
-            $table->foreign('classroom')->references('id')->on('classrooms')->onDelete('cascade');;
+            $table->foreign('classroom')->references('id')->on('classrooms')->onDelete('cascade');
             $table->unsignedBigInteger('class');
-            $table->foreign('class')->references('id')->on('classes')->onDelete('cascade');;
+            $table->foreign('class')->references('id')->on('classes')->onDelete('cascade');
             $table->unsignedBigInteger('professor');
-            $table->foreign('professor')->references('id')->on('professors')->onDelete('cascade');;
+            $table->foreign('professor')->references('id')->on('professors')->onDelete('cascade');
             $table->unsignedBigInteger('subject');
-            $table->foreign('subject')->references('id')->on('subjects')->onDelete('cascade');;
+            $table->foreign('subject')->references('id')->on('subjects');
             $table->timestamps();
         });
     }

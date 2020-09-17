@@ -18,7 +18,7 @@ class CreateClassroomsTable extends Migration
             $table->string('name', 100);
             $table->string('path_image', 100);
             $table->unsignedBigInteger('floor');
-            $table->foreignId('floor')->references('id')->on('floors');
+            $table->foreign('floor')->references('id')->on('floors');
             $table->timestamps();
         });
     }
