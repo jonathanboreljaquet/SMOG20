@@ -1,6 +1,5 @@
 import * as BABYLON from 'babylonjs';
 import Scene from './scene';
-import * as tsEvents from "ts-events";
 import SecondaryScene from './secondary_scene';
 
 
