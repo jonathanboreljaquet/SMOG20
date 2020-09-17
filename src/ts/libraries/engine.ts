@@ -7,26 +7,13 @@ import * as tsEvents from "ts-events";
 export default class Engine{
     private engine: BABYLON.Engine;
     private currentScene: Scene;
-    private event: tsEvents.SyncEvent<Scene> = new tsEvents.SyncEvent<Scene>();
 
     public constructor(canvas: HTMLCanvasElement){
         this.engine = new BABYLON.Engine(canvas, true, {preserveDrawingBuffer: true, stencil: true});
-        this.currentScene = new SecondaryScene(this.engine, canvas,this.event);
+        this.currentScene = new SecondaryScene(this.engine, canvas);
 
         this.linkEvents();
 
-        this.event.attach((scene: Scene) => {
-            if (scene instanceof MainScene) {
-                this.currentScene.dispose();
-                this.currentScene = new SecondaryScene(this.engine,canvas,this.event);
-            }
-            else if(Object.is(scene,SecondaryScene)){
-                this.currentScene.dispose();
-                this.currentScene = new MainScene(this.engine,canvas,this.event);
-            }
-            
-        });
-        
         this.engine.runRenderLoop(() => {
             this.currentScene.render();
         });
@@ -37,6 +24,14 @@ export default class Engine{
         window.addEventListener('resize', () => {
             this.engine.resize();
         });
+        this.currentScene.onSceneChange.attach(item => this.changeScene(item));
     }
     
+    private changeScene(newScene: Scene): void{
+        let oldScene = this.currentScene;
+        oldScene.onSceneChange.detach();
+        newScene.onSceneChange.attach(item => this.changeScene(item));
+        this.currentScene = newScene;
+        oldScene.dispose();
+    }
 }
