@@ -8,6 +8,7 @@ export default class Engine {
     private engine: BABYLON.Engine;
     private currentScene: Scene;
     private canvas: HTMLCanvasElement;
+
     public constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
         this.engine = new BABYLON.Engine(canvas, true, {
@@ -31,9 +32,7 @@ export default class Engine {
             this.changeScene(item)
         );
         document.querySelector("#btnHome").addEventListener("click", () => {
-            this.currentScene.changeScene(
-                new BuildingsScene(this.engine, this.canvas)
-            );
+            this.currentScene.changeScene(new BuildingsScene(this.engine, this.canvas));
         });
     }
 

@@ -14,12 +14,14 @@ use App\Classroom;
 |
 */
 
+// Default route
 $router->get('/', function () use ($router) {
     return view('index');
 });
 
-$router->get('/classroom', function () use ($router) {
-    return response()->json(Classroom::select("name")->get(), 200);
+// Api routes
+$router->group(['prefix' => 'api'], function() use ($router){
+    $router->get('/classrooms', 'ClassroomController@all');
 });
 
 // Routes in debug mode only
