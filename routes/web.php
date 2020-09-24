@@ -21,7 +21,8 @@ $router->get('/', function () use ($router) {
 
 // Api routes
 $router->group(['prefix' => 'api'], function() use ($router){
-    $router->get('/classrooms', 'ClassroomController@all');
+    $router->post('/classrooms', 'ClassroomController@all');
+    $router->post('/floors', 'FloorController@all');
 });
 
 // Routes in debug mode only

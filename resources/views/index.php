@@ -11,7 +11,7 @@
 <body>
     <div class="sidebar">
         <a class="active" id="btnHome">Buildings</a>
-        <a>Floors</a>
+        <a id="sidebar_link_floors_scene">Floors</a>
         <a>Room</a>
     </div>
     <canvas id="renderCanvas"></canvas>

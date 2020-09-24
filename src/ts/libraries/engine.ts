@@ -8,6 +8,16 @@ export default class Engine {
     private engine: BABYLON.Engine;
     private currentScene: Scene;
     private canvas: HTMLCanvasElement;
+    private navLinks = [
+        {
+            id: 'btnHome',
+            scene: BuildingsScene
+        },
+        {
+            id: 'sidebar_link_floors_scene',
+            scene: FloorsScene
+        }
+    ];
 
     public constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
@@ -31,9 +41,11 @@ export default class Engine {
         this.currentScene.onSceneChange.attach((item) =>
             this.changeScene(item)
         );
-        document.querySelector("#btnHome").addEventListener("click", () => {
-            this.currentScene.changeScene(new BuildingsScene(this.engine, this.canvas));
-        });
+        for(let link of this.navLinks){
+            document.getElementById(link.id).addEventListener("click", () => {
+                this.currentScene.changeScene(new link.scene(this.engine, this.canvas));
+            });
+        }
     }
 
     private changeScene(newScene: Scene): void {
