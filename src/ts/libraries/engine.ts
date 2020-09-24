@@ -1,6 +1,6 @@
 import * as BABYLON from 'babylonjs';
 import Scene from '../scenes/scene';
-import MenuBuildings from '../scenes/menu_buildings';
+import MenuBuildings from '../scenes/buildings_scene';
 
 export default class Engine{
     private engine: BABYLON.Engine;

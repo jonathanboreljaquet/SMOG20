@@ -1,6 +1,7 @@
 import * as BABYLON from 'babylonjs';
 import Scene from './scene';
 import FloorsScene from './floors_scene';
+import { Vector2, Vector3 } from 'babylonjs';
 
 
 // Constants
@@ -10,8 +11,8 @@ const SCENE_DEFAULT_BACKCOLOR: BABYLON.Color4 = new BABYLON.Color4(0, 0, 0, 1);
 const CAMERA_UPPER_LIMIT: number = Math.PI / 2.2;
 const CAMERA_MIN_RADIUS: number = 200;
 const CAMERA_MAX_RADIUS: number = 8;
-const CAMERA_DEFAULT_ALPHA: number = Math.PI / 1.5;
-const CAMERA_DEFAULT_BETA: number = Math.PI / 2.4;
+const CAMERA_DEFAULT_ALPHA: number = 0;//Math.PI / 1.5;
+const CAMERA_DEFAULT_BETA: number = 0;// Math.PI / 2.4;
 const CAMERA_DEFAULT_RADIUS: number = 10;
 
 export default class BuildingsScene extends Scene{
@@ -39,16 +40,16 @@ export default class BuildingsScene extends Scene{
 
         this.light = new BABYLON.HemisphericLight('plan_scene_light', new BABYLON.Vector3(0, 1, 0), this.scene);
 
-        let box = BABYLON.MeshBuilder.CreateBox('plan_scene_test_box', {
-            width: 1,
-            height: 7,
-            depth: 1
-        }, this.scene);
-        box.actionManager = new BABYLON.ActionManager(this.scene);
-        box.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger, () => {
+        BABYLON.SceneLoader.ImportMesh("", "../../../public/mesh/cfpthorlogerie.babylon", "", this.scene, (meshes)=>  {
+            meshes[0].scaling = new Vector3(0.1,0.1,0.1);
+            meshes[0].actionManager = new BABYLON.ActionManager(this.scene);
+            meshes[0].actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger, () => {
             this.changeScene(new FloorsScene(engine, canvas));
+            meshes[0].position = BABYLON.Vector3.Zero();
         }));
-        box.position = BABYLON.Vector3.Zero();
+        });
+        
+        
     }
         
     
