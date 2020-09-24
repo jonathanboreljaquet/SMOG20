@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Classroom;
+
 class ExampleController extends Controller
 {
     /**
@@ -12,6 +14,10 @@ class ExampleController extends Controller
     public function __construct()
     {
         //
+    }
+    public function test()
+    {
+        return Classroom::select("name")->get();
     }
 
     //

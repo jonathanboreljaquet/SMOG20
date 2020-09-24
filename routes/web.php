@@ -1,5 +1,7 @@
 <?php
+
 use Illuminate\Support\Str;
+use App\Classroom;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,9 +18,13 @@ $router->get('/', function () use ($router) {
     return view('index');
 });
 
+$router->get('/classroom', function () use ($router) {
+    return response()->json(Classroom::select("name")->get(), 200);
+});
+
 // Routes in debug mode only
 if (env('APP_DEBUG', true)) {
-    $router->get('key', function() use ($router){
+    $router->get('key', function () use ($router) {
         return response(Str::random(32));
     });
 }
