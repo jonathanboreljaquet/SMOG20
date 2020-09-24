@@ -1,6 +1,7 @@
 import * as BABYLON from 'babylonjs';
 import Scene from './scene';
-import MainScene from './main_scene';
+import FloorsScene from './floors_scene';
+
 
 // Constants
 
@@ -13,14 +14,12 @@ const CAMERA_DEFAULT_ALPHA: number = Math.PI / 1.5;
 const CAMERA_DEFAULT_BETA: number = Math.PI / 2.4;
 const CAMERA_DEFAULT_RADIUS: number = 10;
 
-
-export default class SecondaryScene extends Scene{
+export default class BuildingsScene extends Scene{
     // Fields
     private camera: BABYLON.ArcRotateCamera;
     private light: BABYLON.HemisphericLight;
 
     // Constructor
-
     public constructor(engine: BABYLON.Engine, canvas: HTMLCanvasElement){
         super(new BABYLON.Scene(engine));
         this.scene.clearColor = SCENE_DEFAULT_BACKCOLOR;
@@ -40,16 +39,19 @@ export default class SecondaryScene extends Scene{
 
         this.light = new BABYLON.HemisphericLight('plan_scene_light', new BABYLON.Vector3(0, 1, 0), this.scene);
 
-        let sphere = BABYLON.MeshBuilder.CreateSphere('plan_secondary_scene_test_sphere', {
-            diameter: 4
+        let box = BABYLON.MeshBuilder.CreateBox('plan_scene_test_box', {
+            width: 1,
+            height: 7,
+            depth: 1
         }, this.scene);
-        sphere.actionManager = new BABYLON.ActionManager(this.scene);
-        sphere.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger, () => {
-            this.changeScene(new MainScene(engine, canvas));
+        box.actionManager = new BABYLON.ActionManager(this.scene);
+        box.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger, () => {
+            this.changeScene(new FloorsScene(engine, canvas));
         }));
-        sphere.position = BABYLON.Vector3.Zero();
+        box.position = BABYLON.Vector3.Zero();
     }
-
+        
+    
     // Methods
     // ...
 }

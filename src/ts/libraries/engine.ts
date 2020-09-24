@@ -1,6 +1,6 @@
 import * as BABYLON from 'babylonjs';
 import Scene from '../scenes/scene';
-import MainScene from '../scenes/main_scene';
+import MenuBuildings from '../scenes/menu_buildings';
 
 export default class Engine{
     private engine: BABYLON.Engine;
@@ -8,7 +8,7 @@ export default class Engine{
 
     public constructor(canvas: HTMLCanvasElement){
         this.engine = new BABYLON.Engine(canvas, true, {preserveDrawingBuffer: true, stencil: true});
-        this.currentScene = new MainScene(this.engine, canvas);
+        this.currentScene = new MenuBuildings(this.engine, canvas);
 
         this.linkEvents();
 
