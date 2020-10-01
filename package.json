@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/jonathanboreljaquet/SMOG20#readme",
   "dependencies": {
+    "axios": "^0.20.0",
     "babylonjs": "^4.1.0",
     "babylonjs-gui": "^4.1.0",
     "babylonjs-loaders": "^4.1.0",

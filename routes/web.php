@@ -1,5 +1,7 @@
 <?php
+
 use Illuminate\Support\Str;
+use App\Classroom;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,13 +14,20 @@ use Illuminate\Support\Str;
 |
 */
 
+// Default route
 $router->get('/', function () use ($router) {
     return view('index');
 });
 
+// Api routes
+$router->group(['prefix' => 'api'], function() use ($router){
+    $router->post('/classrooms', 'ClassroomController@all');
+    $router->post('/floors', 'FloorController@all');
+});
+
 // Routes in debug mode only
 if (env('APP_DEBUG', true)) {
-    $router->get('key', function() use ($router){
+    $router->get('key', function () use ($router) {
         return response(Str::random(32));
     });
 }

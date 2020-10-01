@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-class ExampleController extends Controller
+use App\Classroom;
+
+class ClassroomController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -11,8 +13,11 @@ class ExampleController extends Controller
      */
     public function __construct()
     {
-        //
+        // Do nothing
     }
 
-    //
+    public function all()
+    {
+        return Classroom::select("name")->get();
+    }
 }

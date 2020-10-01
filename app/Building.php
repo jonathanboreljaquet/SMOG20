@@ -23,4 +23,8 @@ class Building extends Model
      * @var array
      */
     protected $hidden = [];
+
+    public function floors(){
+        return $this->hasMany('App\Floor');
+    }
 }

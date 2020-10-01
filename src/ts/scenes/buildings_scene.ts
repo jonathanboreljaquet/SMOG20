@@ -4,7 +4,6 @@ import FloorsScene from './floors_scene';
 import { Vector2, Vector3 } from 'babylonjs';
 import { GridMaterial } from "babylonjs-materials";
 
-
 // Constants
 
 const SCENE_DEFAULT_BACKCOLOR: BABYLON.Color4 = new BABYLON.Color4(0, 0, 0, 1);
@@ -16,18 +15,18 @@ const CAMERA_DEFAULT_ALPHA: number = 0;
 const CAMERA_DEFAULT_BETA: number = Math.PI / 2.4;
 const CAMERA_DEFAULT_RADIUS: number = 20;
 
-export default class BuildingsScene extends Scene{
+export default class BuildingsScene extends Scene {
     // Fields
     private camera: BABYLON.ArcRotateCamera;
     private light: BABYLON.HemisphericLight;
 
     // Constructor
-    public constructor(engine: BABYLON.Engine, canvas: HTMLCanvasElement){
+    public constructor(engine: BABYLON.Engine, canvas: HTMLCanvasElement) {
         super(new BABYLON.Scene(engine));
         this.scene.clearColor = SCENE_DEFAULT_BACKCOLOR;
 
         this.camera = new BABYLON.ArcRotateCamera(
-            'plan_scene_camera',
+            "plan_scene_camera",
             CAMERA_DEFAULT_ALPHA,
             CAMERA_DEFAULT_BETA,
             CAMERA_DEFAULT_RADIUS,
@@ -71,11 +70,8 @@ export default class BuildingsScene extends Scene{
 
 
         ground.material = material;
-        
-        
     }
-        
-    
+
     // Methods
     // ...
 }
