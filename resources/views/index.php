@@ -12,7 +12,10 @@
     <div class="sidebar">
         <a class="active" id="btnHome">Buildings</a>
         <a id="sidebar_link_floors_scene">Floors</a>
-        <a>Room</a>
+        <a></a>
+        <a id="sidebar_link_floors_scene">Ternier</a>
+        <a id="sidebar_link_floors_scene">Rhone</a>
+        <a id="sidebar_link_floors_scene">Butin</a>
     </div>
     <canvas id="renderCanvas"></canvas>
     <script src="bundle.js"></script>

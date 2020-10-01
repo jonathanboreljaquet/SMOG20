@@ -10,13 +10,15 @@ export default class Engine {
     private canvas: HTMLCanvasElement;
     private navLinks = [
         {
-            id: 'btnHome',
-            scene: BuildingsScene
+            id: "btnHome",
+            scene: BuildingsScene,
+            params: [],
         },
         {
-            id: 'sidebar_link_floors_scene',
-            scene: FloorsScene
-        }
+            id: "sidebar_link_floors_scene",
+            scene: FloorsScene,
+            params: [1],
+        },
     ];
 
     public constructor(canvas: HTMLCanvasElement) {
@@ -41,9 +43,11 @@ export default class Engine {
         this.currentScene.onSceneChange.attach((item) =>
             this.changeScene(item)
         );
-        for(let link of this.navLinks){
+        for (let link of this.navLinks) {
             document.getElementById(link.id).addEventListener("click", () => {
-                this.currentScene.changeScene(new link.scene(this.engine, this.canvas));
+                this.currentScene.changeScene(
+                    new link.scene(this.engine, this.canvas, ...link.params)
+                );
             });
         }
     }

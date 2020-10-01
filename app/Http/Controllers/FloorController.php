@@ -31,4 +31,17 @@ class FloorController extends Controller
             return Floor::select('id', 'name', 'path_plan', 'index')->where('building', '=', $building->id)->get();
         }
     }
+
+    public function numberfloor(Request $request)
+    {
+        $this->validate($request, [
+            'building_id' => 'required|numeric'
+        ]);
+
+        if (!Building::where('id', '=', $request->building_id)->exists()) {
+            return response('Building not found', 404);
+        } else {
+            return Floor::where('building', '=', $request->building_id)->count();
+        }
+    }
 }
