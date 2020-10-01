@@ -11,20 +11,20 @@ Exporter version: 6.4.4, Blender version: 2.90.1
 		Keep Z-up r-handed  :  no
 		Texture directory   :  C:\laragon\www\SMOG20\public\mesh\
 	Python World class constructor completed
-	processing begun of camera (UniversalCamera):  Camera
-	processing begun of mesh:  Cfptrhone
-		WARNING: No materials have been assigned: 
-		num positions      :  82
-		num normals        :  82
+	processing begun of mesh:  Cube
+		processing begun of material:  Material
+		num positions      :  5548
+		num normals        :  5548
 		num tangents       :  0
-		num uvs            :  0
+		num uvs            :  11096
 		num uvs2           :  0
 		num colors         :  0
-		num triangles      :  70
-	WARNING: The following object (type - FONT) is not currently exportable thus ignored: Text
+		num triangles      :  8700
+		WARNING: # of 0 area faces found:  4
+	processing begun of camera (UniversalCamera):  Camera
 	processing begun of light (POINT):  Light
 ========= Writing of JSON file started =========
-	writing mesh:  Cfptrhone
+	writing mesh:  Cube
 ========= Writing of JSON file completed =========
 ========= end of processing =========
-elapsed time:  0 min, 0.0171 secs
+elapsed time:  0 min, 0.435 secs
