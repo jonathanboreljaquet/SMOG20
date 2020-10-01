@@ -21,14 +21,14 @@ class FloorController extends Controller
     public function all(Request $request)
     {
         $this->validate($request, [
-            'building_name' => 'nullable|string|min:3|max:50'
+            'building_id' => 'required|numeric'
         ]);
 
-        $building = $request->has('building_name') ? Building::where('name', '=', $request->building_name)->first() : Building::first();
+        $building = Building::find($request->building_id);
         if ($building == null) {
             return response('Building not found', 404);
         }else{
-            return $building->floors();
+            return Floor::select('id', 'name', 'path_plan', 'index')->where('building', '=', $building->id)->get();
         }
     }
 }
