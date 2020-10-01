@@ -3,6 +3,7 @@ import Scene from './scene';
 import FloorsScene from './floors_scene';
 import { Vector2, Vector3 } from 'babylonjs';
 import { GridMaterial } from "babylonjs-materials";
+import ENV from '../environnement';
 
 // Constants
 
@@ -10,10 +11,10 @@ const SCENE_DEFAULT_BACKCOLOR: BABYLON.Color4 = new BABYLON.Color4(0, 0, 0, 1);
 
 const CAMERA_UPPER_LIMIT: number = Math.PI / 2.2;
 const CAMERA_MIN_RADIUS: number = 200;
-const CAMERA_MAX_RADIUS: number = 8;
+const CAMERA_MAX_RADIUS: number = 20;
 const CAMERA_DEFAULT_ALPHA: number = 0;
 const CAMERA_DEFAULT_BETA: number = Math.PI / 2.4;
-const CAMERA_DEFAULT_RADIUS: number = 20;
+const CAMERA_DEFAULT_RADIUS: number = 40;
 
 export default class BuildingsScene extends Scene {
     // Fields
@@ -41,7 +42,7 @@ export default class BuildingsScene extends Scene {
 
         this.light = new BABYLON.HemisphericLight('plan_scene_light', new BABYLON.Vector3(0, 1, 0), this.scene);
         
-        BABYLON.SceneLoader.ImportMesh("", "mesh/cfptrhonetest.babylon", "", this.scene, (meshes)=>  {
+        BABYLON.SceneLoader.ImportMesh("", ENV.MESHES_FOLDER + "cfptrhonetest.babylon", "", this.scene, (meshes)=>  {
             meshes[0].scaling = new Vector3(1,1,1);
             meshes[0].actionManager = new BABYLON.ActionManager(this.scene);
             meshes[0].position =new Vector3(0,1,0);
@@ -49,7 +50,7 @@ export default class BuildingsScene extends Scene {
                 this.changeScene(new FloorsScene(engine, canvas));
             }));
         });
-        BABYLON.SceneLoader.ImportMesh("", "mesh/cfpthorlogerietest.babylon", "", this.scene, (meshes)=>  {
+        BABYLON.SceneLoader.ImportMesh("", ENV.MESHES_FOLDER + "cfpthorlogerietest.babylon", "", this.scene, (meshes)=>  {
             meshes[0].scaling = new Vector3(1,1,1);
             meshes[0].actionManager = new BABYLON.ActionManager(this.scene);
             meshes[0].position = new Vector3(0,1,-10);
@@ -57,7 +58,7 @@ export default class BuildingsScene extends Scene {
                 this.changeScene(new FloorsScene(engine, canvas));
             }));
         });
-        BABYLON.SceneLoader.ImportMesh("", "mesh/cfptterniertest.babylon", "", this.scene, (meshes)=>  {
+        BABYLON.SceneLoader.ImportMesh("", ENV.MESHES_FOLDER + "cfptterniertest.babylon", "", this.scene, (meshes)=>  {
             meshes[0].scaling = new Vector3(1,1,1);
             meshes[0].actionManager = new BABYLON.ActionManager(this.scene);
             meshes[0].position = new Vector3(0,1,10);
