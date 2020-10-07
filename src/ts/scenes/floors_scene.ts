@@ -31,6 +31,7 @@ export default class FloorsScene extends Scene{
         this.engine = engine;
         engine.displayLoadingUI();
 
+        // Send request
         axios.post(`${API_ENDPOINT}/floors`, {
             building_name: building_name
         }).then(response => {
