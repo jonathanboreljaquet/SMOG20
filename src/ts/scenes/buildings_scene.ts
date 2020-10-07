@@ -41,7 +41,7 @@ export default class BuildingsScene extends Scene {
 
         this.light = new BABYLON.HemisphericLight('plan_scene_light', new BABYLON.Vector3(0, 1, 0), this.scene);
         
-        BABYLON.SceneLoader.ImportMesh("", "../../../public/mesh/cfptrhonetest.babylon", "", this.scene, (meshes)=>  {
+        BABYLON.SceneLoader.ImportMesh("", "mesh/cfptrhonetest.babylon", "", this.scene, (meshes)=>  {
             meshes[0].scaling = new Vector3(1,1,1);
             meshes[0].actionManager = new BABYLON.ActionManager(this.scene);
             meshes[0].position =new Vector3(0,1,0);
@@ -49,7 +49,7 @@ export default class BuildingsScene extends Scene {
                 this.changeScene(new FloorsScene(engine, canvas));
             }));
         });
-        BABYLON.SceneLoader.ImportMesh("", "../../../public/mesh/cfpthorlogerietest.babylon", "", this.scene, (meshes)=>  {
+        BABYLON.SceneLoader.ImportMesh("", "mesh/cfpthorlogerietest.babylon", "", this.scene, (meshes)=>  {
             meshes[0].scaling = new Vector3(1,1,1);
             meshes[0].actionManager = new BABYLON.ActionManager(this.scene);
             meshes[0].position = new Vector3(0,1,-10);
@@ -57,7 +57,7 @@ export default class BuildingsScene extends Scene {
                 this.changeScene(new FloorsScene(engine, canvas));
             }));
         });
-        BABYLON.SceneLoader.ImportMesh("", "../../../public/mesh/cfptterniertest.babylon", "", this.scene, (meshes)=>  {
+        BABYLON.SceneLoader.ImportMesh("", "mesh/cfptterniertest.babylon", "", this.scene, (meshes)=>  {
             meshes[0].scaling = new Vector3(1,1,1);
             meshes[0].actionManager = new BABYLON.ActionManager(this.scene);
             meshes[0].position = new Vector3(0,1,10);

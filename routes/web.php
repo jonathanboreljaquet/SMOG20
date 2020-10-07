@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Str;
-use App\Classroom;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,9 +19,11 @@ $router->get('/', function () use ($router) {
 });
 
 // Api routes
-$router->group(['prefix' => 'api'], function() use ($router){
+$router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('/classrooms', 'ClassroomController@all');
     $router->post('/floors', 'FloorController@all');
+    $router->post('/buildings', 'BuildingController@all');
+    $router->post('/floorsNumber', 'FloorController@numberFloor');
 });
 
 // Routes in debug mode only
