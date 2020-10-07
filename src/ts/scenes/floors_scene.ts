@@ -3,6 +3,8 @@ import Scene from './scene';
 import MenuBuildings from './buildings_scene';
 import axios from 'axios';
 import { Axis } from 'babylonjs';
+import Helpers from '../libraries/helpers';
+import * as GUI from 'babylonjs-gui';
 
 // Constants
 
@@ -22,26 +24,32 @@ export default class FloorsScene extends Scene{
     private camera: BABYLON.ArcRotateCamera;
     private light: BABYLON.HemisphericLight;
     private engine: BABYLON.Engine;
+    private canvas: HTMLCanvasElement;
+    private advancedTexture: GUI.AdvancedDynamicTexture;
 
     // Constructor
 
-    public constructor(engine: BABYLON.Engine, canvas: HTMLCanvasElement, building_name: string = 'Rhone'){
+    public constructor(engine: BABYLON.Engine, canvas: HTMLCanvasElement, building_id: number = 1){
         super(new BABYLON.Scene(engine));
 
         this.engine = engine;
-        engine.displayLoadingUI();
+        this.canvas = canvas;
+        this.advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI('UI');
+        this.initScene();
 
-        // Send request
-        axios.post(`${API_ENDPOINT}/floors`, {
-            building_name: building_name
-        }).then(response => {
-            console.log(response);
+        this.getFloors(building_id).then(floors => {
+            console.log(floors);
         }, error => {
-            console.error(error);
-        }).finally(() => {
-            engine.hideLoadingUI();
+            console.log(error);
+            Helpers.displayError(this.advancedTexture, 'Cannot load floors')
         });
+    }
 
+    /**
+     * @description Add scene basic elements
+     * @private
+     */
+    private initScene(): void{
         this.scene.clearColor = SCENE_DEFAULT_BACKCOLOR;
 
         this.camera = new BABYLON.ArcRotateCamera(
@@ -53,11 +61,26 @@ export default class FloorsScene extends Scene{
             this.scene
         );
 
-        this.camera.attachControl(canvas, true);
+        this.camera.attachControl(this.canvas, true);
         this.camera.upperBetaLimit = CAMERA_UPPER_LIMIT;
         this.camera.lowerRadiusLimit = CAMERA_MAX_RADIUS;
         this.camera.upperRadiusLimit = CAMERA_MIN_RADIUS;
 
-        this.light = new BABYLON.HemisphericLight('floors_scene_main_light', new BABYLON.Vector3(0, 1, 0), this.scene);
+        this.light = new BABYLON.HemisphericLight('floors_scene_main_light', new BABYLON.Vector3(0, 10, 0), this.scene);
+    }
+
+    private getFloors(building_id: number): Promise<any>{
+        this.engine.displayLoadingUI();
+        return new Promise((resolve, reject) => {
+            axios.post(`${API_ENDPOINT}/floors`, {
+                building_id: building_id
+            }).then(response => {
+                resolve(response.data);
+            }, error => {
+                reject(error);
+            }).finally(() => {
+                this.engine.hideLoadingUI();
+            });
+        });
     }
 }

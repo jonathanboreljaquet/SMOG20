@@ -40,7 +40,7 @@ export default class BuildingsScene extends Scene {
         this.camera.upperRadiusLimit = CAMERA_MIN_RADIUS;
 
         this.light = new BABYLON.HemisphericLight('plan_scene_light', new BABYLON.Vector3(0, 1, 0), this.scene);
-        
+
         BABYLON.SceneLoader.ImportMesh("", "mesh/cfptrhonetest.babylon", "", this.scene, (meshes)=>  {
             meshes[0].scaling = new Vector3(1,1,1);
             meshes[0].actionManager = new BABYLON.ActionManager(this.scene);
@@ -71,7 +71,4 @@ export default class BuildingsScene extends Scene {
 
         ground.material = material;
     }
-
-    // Methods
-    // ...
 }
