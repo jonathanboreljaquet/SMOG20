@@ -1,6 +1,9 @@
 import * as BABYLON from 'babylonjs';
 import Scene from './scene';
 import BuildingsScene from './buildings_scene';
+import ENV from '../environnement';
+import * as GUI from 'babylonjs-gui';
+import FloorsScene from './floors_scene';
 
 // Constants
 
@@ -21,10 +24,9 @@ export default class ClassroomScene extends Scene{
 
     // Constructor
 
-    public constructor(engine: BABYLON.Engine, canvas: HTMLCanvasElement){
+    public constructor(engine: BABYLON.Engine, canvas: HTMLCanvasElement,imgName: string,previousScene: Scene){
         super(new BABYLON.Scene(engine));
         this.scene.clearColor = SCENE_DEFAULT_BACKCOLOR;
-
         this.camera = new BABYLON.ArcRotateCamera(
             'plan_scene_camera',
             CAMERA_DEFAULT_ALPHA,
@@ -37,17 +39,36 @@ export default class ClassroomScene extends Scene{
         this.camera.upperBetaLimit = CAMERA_UPPER_LIMIT;
         this.camera.lowerRadiusLimit = CAMERA_MAX_RADIUS;
         this.camera.upperRadiusLimit = CAMERA_MIN_RADIUS;
+        //Reverses the direction of rotation of the camera and decreases the speed
+        this.camera.angularSensibilityY *=-7;
+        this.camera.angularSensibilityX *=-7;
 
         this.light = new BABYLON.HemisphericLight('plan_scene_light', new BABYLON.Vector3(0, 1, 0), this.scene);
 
-        let sphere = BABYLON.MeshBuilder.CreateSphere('plan_secondary_scene_test_sphere', {
-            diameter: 4
-        }, this.scene);
-        sphere.actionManager = new BABYLON.ActionManager(this.scene);
-        sphere.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger, () => {
-            this.changeScene(new BuildingsScene(engine, canvas));
-        }));
-        sphere.position = BABYLON.Vector3.Zero();
+        let dome = new BABYLON.PhotoDome(
+            "classroom",
+            ENV.IMAGE_FOLDER+imgName,
+            {
+                resolution : 32,
+                size: 1000
+            },
+            this.scene
+        );
+        dome.imageMode= BABYLON.PhotoDome.MODE_MONOSCOPIC;
+
+        var advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+        var button = GUI.Button.CreateSimpleButton(
+            "button_go_back",
+            "Return"
+          );
+        button.height = "40px";
+        button.color = "white";
+        button.background = "black";
+        button.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+        button.onPointerDownObservable.add(() => {
+            this.changeScene(previousScene);
+        });
+        advancedTexture.addControl(button);
     }
 
     // Methods

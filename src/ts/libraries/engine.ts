@@ -3,6 +3,7 @@ import Scene from "../scenes/scene";
 import MenuBuildings from "../scenes/buildings_scene";
 import FloorsScene from "../scenes/floors_scene";
 import BuildingsScene from "../scenes/buildings_scene";
+import ClassroomScene from "../scenes/classroom_scene";
 
 export default class Engine {
     private engine: BABYLON.Engine;
@@ -27,7 +28,7 @@ export default class Engine {
             preserveDrawingBuffer: true,
             stencil: true,
         });
-        this.currentScene = new MenuBuildings(this.engine, canvas);
+        this.currentScene = new ClassroomScene(this.engine, canvas,"test.jpg",this.currentScene);
 
         this.linkEvents();
 
