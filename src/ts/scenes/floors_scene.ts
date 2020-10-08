@@ -2,6 +2,8 @@ import * as BABYLON from 'babylonjs';
 import Scene from './scene';
 import axios from 'axios';
 import ENV from '../environnement';
+import Helpers from '../libraries/helpers';
+import * as GUI from 'babylonjs-gui';
 
 // Constants
 
@@ -20,6 +22,8 @@ export default class FloorsScene extends Scene{
     private camera: BABYLON.ArcRotateCamera;
     private light: BABYLON.HemisphericLight;
     private engine: BABYLON.Engine;
+    private canvas: HTMLCanvasElement;
+    private advancedTexture: GUI.AdvancedDynamicTexture;
 
     // Constructor
 
@@ -27,18 +31,23 @@ export default class FloorsScene extends Scene{
         super(new BABYLON.Scene(engine));
 
         this.engine = engine;
-        engine.displayLoadingUI();
+        this.canvas = canvas;
+        this.advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI('UI');
+        this.initScene();
 
-        axios.post(ENV.API_ENDPOINT + 'floors', {
-            building_id: building_id
-        }).then(response => {
-            this.floorsLoaded(response.data);
+        this.getFloors(building_id).then(floors => {
+            this.floorsLoaded(floors);
         }, error => {
-            console.error(error);
-        }).finally(() => {
-            engine.hideLoadingUI();
+            console.log(error);
+            Helpers.displayError(this.advancedTexture, 'Cannot load floors');
         });
+    }
 
+    /**
+     * @description Add scene basic elements
+     * @private
+     */
+    private initScene(): void{
         this.scene.clearColor = SCENE_DEFAULT_BACKCOLOR;
 
         this.camera = new BABYLON.ArcRotateCamera(
@@ -50,7 +59,7 @@ export default class FloorsScene extends Scene{
             this.scene
         );
 
-        this.camera.attachControl(canvas, true);
+        this.camera.attachControl(this.canvas, true);
         (this.camera.inputs.attached.pointers as BABYLON.ArcRotateCameraPointersInput).buttons = [0];
         this.camera.upperBetaLimit = CAMERA_UPPER_LIMIT;
         this.camera.lowerRadiusLimit = CAMERA_MAX_RADIUS;
@@ -59,6 +68,31 @@ export default class FloorsScene extends Scene{
         this.light = new BABYLON.HemisphericLight('floors_scene_main_light', new BABYLON.Vector3(0, 1, 0), this.scene);
     }
 
+    /**
+     * @description Get floors from backend
+     * @param building_id
+     * @private
+     */
+    private getFloors(building_id: number): Promise<any>{
+        this.engine.displayLoadingUI();
+        return new Promise<any>((resolve, reject) => {
+            axios.post(ENV.API_ENDPOINT + 'floors', {
+                building_id: building_id
+            }).then(response => {
+                resolve(response.data);
+            }, error => {
+                reject(error);
+            }).finally(() => {
+                this.engine.hideLoadingUI();
+            });
+        });
+    }
+
+    /**
+     * @description Add floors to scene
+     * @param floors
+     * @private
+     */
     private floorsLoaded(floors: any){
         for(let floor of floors){
             if (floor.index == 0){
