@@ -94,6 +94,10 @@ export default class FloorsScene extends Scene{
      * @private
      */
     private floorsLoaded(floors: any){
+        floors.sort((a, b) => {
+           return a.index > b.index;
+        });
+        console.log(floors);
         for(let floor of floors){
             if (floor.index == 0){
                 BABYLON.SceneLoader.ImportMesh('', ENV.MESHES_FOLDER + floor.path_plan + '.babylon', '', this.scene, meshes => {
