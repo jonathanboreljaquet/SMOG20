@@ -24,6 +24,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('/floors', 'FloorController@all');
     $router->post('/buildings', 'BuildingController@all');
     $router->post('/floorsNumber', 'FloorController@numberFloor');
+    $router->post('/schedule', 'LessonController@classSchedule');
 });
 
 // Routes in debug mode only
