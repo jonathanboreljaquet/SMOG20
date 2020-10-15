@@ -28,7 +28,7 @@ export default class Engine {
             preserveDrawingBuffer: true,
             stencil: true,
         });
-        this.currentScene = new ClassroomScene(this.engine, canvas,"test.jpg",this.currentScene);
+        this.currentScene = new BuildingsScene(this.engine, canvas);
 
         this.linkEvents();
 
@@ -54,10 +54,12 @@ export default class Engine {
     }
 
     private changeScene(newScene: Scene): void {
+        console.log("CLICK BUTTON");
         let oldScene = this.currentScene;
         oldScene.onSceneChange.detach();
         newScene.onSceneChange.attach((item) => this.changeScene(item));
         this.currentScene = newScene;
+        if(!oldScene.keep)
         oldScene.dispose();
     }
 }

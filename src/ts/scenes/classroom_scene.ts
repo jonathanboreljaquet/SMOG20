@@ -66,6 +66,7 @@ export default class ClassroomScene extends Scene{
         button.background = "black";
         button.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
         button.onPointerDownObservable.add(() => {
+            previousScene.keep = true;
             this.changeScene(previousScene);
         });
         advancedTexture.addControl(button);

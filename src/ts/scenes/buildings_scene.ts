@@ -4,6 +4,7 @@ import FloorsScene from './floors_scene';
 import { Vector2, Vector3 } from 'babylonjs';
 import { GridMaterial } from "babylonjs-materials";
 import ENV from '../environnement';
+import ClassroomScene from './classroom_scene';
 
 // Constants
 
@@ -47,7 +48,7 @@ export default class BuildingsScene extends Scene {
             meshes[0].actionManager = new BABYLON.ActionManager(this.scene);
             meshes[0].position =new Vector3(0,1,0);
             meshes[0].actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger, () => {
-                this.changeScene(new FloorsScene(engine, canvas));
+                this.changeScene(new ClassroomScene(engine, canvas,"test.jpg",this));
             }));
         });
         BABYLON.SceneLoader.ImportMesh("", ENV.MESHES_FOLDER + "cfpthorlogerietest.babylon", "", this.scene, (meshes)=>  {

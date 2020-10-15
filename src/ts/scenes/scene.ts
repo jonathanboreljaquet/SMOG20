@@ -5,6 +5,7 @@ import {SyncEvent} from 'ts-events';
 export default class Scene {
     protected scene: BABYLON.Scene;
     public onSceneChange: SyncEvent<Scene>;
+    public keep: boolean = true;
 
     public constructor(scene: BABYLON.Scene) {
         this.scene = scene;
