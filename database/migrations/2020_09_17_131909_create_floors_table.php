@@ -17,6 +17,7 @@ class CreateFloorsTable extends Migration
             $table->id();
             $table->string('name', 100);
             $table->string('path_plan', 100);
+            $table->mediumInteger('index');
             $table->unsignedBigInteger('building');
             $table->foreign('building')->references('id')->on('buildings')->onDelete('cascade');
             $table->timestamps();

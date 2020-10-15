@@ -4,6 +4,7 @@ import axios from 'axios';
 import ENV from '../environnement';
 import Helpers from '../libraries/helpers';
 import * as GUI from 'babylonjs-gui';
+import * as ANIMATIONS from '../animations';
 
 // Constants
 
@@ -24,6 +25,9 @@ export default class FloorsScene extends Scene{
     private engine: BABYLON.Engine;
     private canvas: HTMLCanvasElement;
     private advancedTexture: GUI.AdvancedDynamicTexture;
+    private currentFloorIndex: number;
+    private floors: any;
+    private labelCurrentFloor: GUI.TextBlock;
 
     // Constructor
 
@@ -33,10 +37,13 @@ export default class FloorsScene extends Scene{
         this.engine = engine;
         this.canvas = canvas;
         this.advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI('UI');
+        this.currentFloorIndex = 0;
         this.initScene();
+        this.addUi();
 
         this.getFloors(building_id).then(floors => {
-            this.floorsLoaded(floors);
+            this.floors = floors;
+            this.floorsLoaded();
         }, error => {
             console.log(error);
             Helpers.displayError(this.advancedTexture, 'Cannot load floors');
@@ -82,8 +89,6 @@ export default class FloorsScene extends Scene{
                 resolve(response.data);
             }, error => {
                 reject(error);
-            }).finally(() => {
-                this.engine.hideLoadingUI();
             });
         });
     }
@@ -93,13 +98,95 @@ export default class FloorsScene extends Scene{
      * @param floors
      * @private
      */
-    private floorsLoaded(floors: any){
-        for(let floor of floors){
-            if (floor.index == 0){
+    private floorsLoaded(){
+        let promises = [];
+        this.floors.forEach((floor, index) => {
+            promises.push(new Promise<any>((resolve, reject) => {
                 BABYLON.SceneLoader.ImportMesh('', ENV.MESHES_FOLDER + floor.path_plan + '.babylon', '', this.scene, meshes => {
-                    meshes[0].position = BABYLON.Vector3.Zero();
+                    for(let i = 1; i< meshes.length; i++){
+                        meshes[i].parent = meshes[0];
+                    }
+                    floor.meshes = meshes;
+                    if (floor.index == 0){
+                        this.currentFloorIndex = index;
+                    }
+                    else{
+                        for(let mesh of meshes){
+                            mesh.visibility = 0;
+                        }
+                    }
+                    resolve();
                 });
-            }
+            }))
+        });
+        // Mesh loaded
+        Promise.all(promises).then(value => {
+            this.labelCurrentFloor.text = this.floors[this.currentFloorIndex].index.toString();
+            this.engine.hideLoadingUI();
+        });
+    }
+
+    private changeFloor(newFloor: number): void{
+        if(newFloor > this.floors.length - 1)
+            newFloor = this.floors.length - 1;
+        else if(newFloor < 0)
+            newFloor = 0;
+        if(newFloor == this.currentFloorIndex)
+            return;
+
+        this.scene.beginDirectAnimation(this.floors[this.currentFloorIndex].meshes[0], [newFloor > this.currentFloorIndex ? ANIMATIONS.animationTransitionY(0, 10) : ANIMATIONS.animationTransitionY(0, -10)], 0, ANIMATIONS.frameRate, false);
+        for(let mesh of this.floors[this.currentFloorIndex].meshes){
+            this.scene.beginDirectAnimation(mesh, [ANIMATIONS.animationVisibility(1, 0)], 0, ANIMATIONS.frameRate, false);
         }
+        this.scene.beginDirectAnimation(this.floors[newFloor].meshes[0], [newFloor > this.currentFloorIndex ? ANIMATIONS.animationTransitionY(-10, 0) : ANIMATIONS.animationTransitionY(10, 0)], 0, ANIMATIONS.frameRate, false);
+        for(let mesh of this.floors[newFloor].meshes){
+            this.scene.beginDirectAnimation(mesh, [ANIMATIONS.animationVisibility(0, 1)], 0, ANIMATIONS.frameRate, false);
+        }
+
+        this.currentFloorIndex = newFloor;
+        this.labelCurrentFloor.text = this.floors[this.currentFloorIndex].index.toString();
+
+
+    }
+
+    private addUi(): void{
+        let buttonUp: GUI.Button = GUI.Button.CreateSimpleButton('buttonUp', '🔼');
+        buttonUp.width = 1;
+        buttonUp.height = '60px';
+        buttonUp.color = 'white';
+        buttonUp.fontSize = 70;
+
+        buttonUp.onPointerClickObservable.add(state => {
+            this.changeFloor(this.currentFloorIndex - 1);
+        });
+
+        let text: GUI.TextBlock = new GUI.TextBlock();
+        text.text = '0';
+        text.color = 'white';
+        text.height = '60px';
+        text.fontSize = 35;
+
+        let buttonDown: GUI.Button = GUI.Button.CreateSimpleButton('buttonDown', '🔽');
+        buttonDown.width = 1;
+        buttonDown.height = '60px';
+        buttonDown.color = 'white';
+        buttonDown.fontSize = 70;
+
+        buttonDown.onPointerClickObservable.add(state => {
+           this.changeFloor(this.currentFloorIndex + 1);
+        });
+
+        let panel: GUI.StackPanel = new GUI.StackPanel();
+        panel.width = '60px';
+        panel.height = '180px';
+        panel.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+        panel.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+
+        this.labelCurrentFloor = text;
+        panel.addControl(buttonUp);
+        panel.addControl(text);
+        panel.addControl(buttonDown);
+
+        this.advancedTexture.addControl(panel);
     }
 }
