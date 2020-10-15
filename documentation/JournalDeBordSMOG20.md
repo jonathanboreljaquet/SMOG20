@@ -9,15 +9,11 @@
 | je 24.09.2020 | Résolution de problèmes de routes, modélisation de l'étage et des bâtiments test |
 | je 01.10.2020 | Création de la scene pour les bâtiments, mise en place des routes pour les requêtes sql, Chargement du premier étage de Rhône     |
 | je 08.10.2020 | Création et dépôt du poster, affichage de la salle en 360° et ajout d'un bouton return dans la class classroom_scene,passage de Bootsrap a Bulma pour l'interface + refactoring class FloorsScene  |
-| je 08.10.2020 23:55 | Text     |
-| je 15.10.2020 | Text     |
+| je 15.10.2020 | Fix du bouton return dans la classe classroom_scene, modification de l'affichage de la navbar et corréction de bug et animation de changement d'étages |
 | je 18.10.2020 23:55 | Text     |
 | je 22.10.2020 | Text     |
 | je 29.10.2020 | Text     |
-| di 01.11.2020 23:55 | Text     |
 | je 05.11.2020 | Text     |
 | je 12.11.2020 | Text     |
-| di 15.11.2020 23:55 | Text     |
 | je 19.11.2020 | Text     |
-| di 22.11..2020 23:55 | Text     |
 | je 26.11.2020 | Text     |
