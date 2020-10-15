@@ -14,7 +14,7 @@ class Lesson extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'day', 'num_hour', 'is_semester', 'period_year', 'classroom', 'class', 'professor', 'subject'
+        'id', 'day', 'h01', 'h02', 'h03', 'h04', 'h05', 'h06', 'h07', 'h08', 'h09', 'h10', 'h11', 'h12', 'firstweek', 'nbweeks', 'classroom', 'class', 'professor', 'subject'
     ];
 
     /**
