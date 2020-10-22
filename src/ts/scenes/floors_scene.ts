@@ -19,6 +19,35 @@ const CAMERA_DEFAULT_ALPHA: number = 0;
 const CAMERA_DEFAULT_BETA: number = Math.PI * 70 / 180;
 const CAMERA_DEFAULT_RADIUS: number = 5;
 
+const LABEL_TEXT_COLOR = 'white';
+const LABEL_FONT_SIZE = '15px';
+const LABEL_BACKGROUND_COLOR = 'black';
+const LABEL_HEIGHT = '25px';
+const LABEL_WIDTH = '50px';
+const LABEL_CORNER_RADIUS = 5;
+const LABEL_THICKNESS = 1;
+const LABEL_LINK_OFFSET_Y = -50;
+const LABEL_Z_INDEX = -1;
+
+const BUTTON_UP_WIDTH = 1;
+const BUTTON_UP_HEIGHT = '60px';
+const BUTTON_UP_TEXT_COLOR = 'white';
+const BUTTON_UP_FONT_SIZE = 70;
+
+const CURRENT_FLOOR_LABEL_DEFAULT_TEXT = '0';
+const CURRENT_FLOOR_LABEL_TEXT_COLOR = 'white';
+const CURRENT_FLOOR_LABEL_HEIGHT = '60px';
+const CURRENT_FLOOR_lABEL_FONT_SIZE = 35;
+
+const BUTTON_DOWN_WIDTH = 1;
+const BUTTON_DOWN_HEIGHT = '60px';
+const BUTTON_DOWN_TEXT_COLOR = 'white';
+const BUTTON_DOWN_FONT_SIZE = 70;
+
+const PANEL_WIDTH = '60px';
+const PANEL_HEIGHT = '180px';
+const PANEL_HORIZONTAL_ALIGNMENT = GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+const PANEL_VERTICAL_ALIGNMENT = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
 
 export default class FloorsScene extends Scene{
     // Fields
@@ -120,18 +149,18 @@ export default class FloorsScene extends Scene{
 
                         let text = new GUI.TextBlock();
                         text.text = classroom.name;
-                        text.color = 'white';
-                        text.fontSize = '15px';
+                        text.color = LABEL_TEXT_COLOR;
+                        text.fontSize = LABEL_FONT_SIZE;
 
                         let label = new GUI.Button('label');
-                        label.background = 'black';
-                        label.color = 'white';
-                        label.height = '25px';
-                        label.width = '50px';
-                        label.cornerRadius = 5;
-                        label.thickness = 1;
-                        label.linkOffsetY = -50;
-                        label.zIndex = -1;
+                        label.background = LABEL_BACKGROUND_COLOR;
+                        label.color = LABEL_TEXT_COLOR;
+                        label.height = LABEL_HEIGHT;
+                        label.width = LABEL_WIDTH;
+                        label.cornerRadius = LABEL_CORNER_RADIUS;
+                        label.thickness = LABEL_THICKNESS;
+                        label.linkOffsetY = LABEL_LINK_OFFSET_Y;
+                        label.zIndex = LABEL_Z_INDEX;
                         label.addControl(text);
                         this.advancedTexture.addControl(label);
                         label.linkWithMesh(anchor);
@@ -205,36 +234,36 @@ export default class FloorsScene extends Scene{
      */
     private addUi(): void{
         let buttonUp: GUI.Button = GUI.Button.CreateSimpleButton('buttonUp', '🔼');
-        buttonUp.width = 1;
-        buttonUp.height = '60px';
-        buttonUp.color = 'white';
-        buttonUp.fontSize = 70;
+        buttonUp.width = BUTTON_UP_WIDTH;
+        buttonUp.height = BUTTON_UP_HEIGHT;
+        buttonUp.color = BUTTON_UP_TEXT_COLOR;
+        buttonUp.fontSize = BUTTON_UP_FONT_SIZE;
 
         buttonUp.onPointerClickObservable.add(state => {
             this.changeFloor(this.currentFloorIndex - 1);
         });
 
         let text: GUI.TextBlock = new GUI.TextBlock();
-        text.text = '0';
-        text.color = 'white';
-        text.height = '60px';
-        text.fontSize = 35;
+        text.text = CURRENT_FLOOR_LABEL_DEFAULT_TEXT;
+        text.color = CURRENT_FLOOR_LABEL_TEXT_COLOR;
+        text.height = CURRENT_FLOOR_LABEL_HEIGHT;
+        text.fontSize = CURRENT_FLOOR_lABEL_FONT_SIZE;
 
         let buttonDown: GUI.Button = GUI.Button.CreateSimpleButton('buttonDown', '🔽');
-        buttonDown.width = 1;
-        buttonDown.height = '60px';
-        buttonDown.color = 'white';
-        buttonDown.fontSize = 70;
+        buttonDown.width = BUTTON_DOWN_WIDTH;
+        buttonDown.height = BUTTON_DOWN_HEIGHT;
+        buttonDown.color = BUTTON_DOWN_TEXT_COLOR;
+        buttonDown.fontSize = BUTTON_DOWN_FONT_SIZE;
 
         buttonDown.onPointerClickObservable.add(state => {
            this.changeFloor(this.currentFloorIndex + 1);
         });
 
         let panel: GUI.StackPanel = new GUI.StackPanel();
-        panel.width = '60px';
-        panel.height = '180px';
-        panel.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
-        panel.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+        panel.width = PANEL_WIDTH;
+        panel.height = PANEL_HEIGHT;
+        panel.horizontalAlignment = PANEL_HORIZONTAL_ALIGNMENT;
+        panel.verticalAlignment = PANEL_VERTICAL_ALIGNMENT;
 
         this.labelCurrentFloor = text;
         panel.addControl(buttonUp);

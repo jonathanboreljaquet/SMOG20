@@ -16,7 +16,6 @@ const CAMERA_DEFAULT_ALPHA: number = Math.PI / 1.5;
 const CAMERA_DEFAULT_BETA: number = Math.PI / 2.4;
 const CAMERA_DEFAULT_RADIUS: number = 10;
 
-
 export default class ClassroomScene extends Scene{
     // Fields
     private camera: BABYLON.ArcRotateCamera;
