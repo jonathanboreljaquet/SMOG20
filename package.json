@@ -28,6 +28,7 @@
     "babylonjs-gui": "^4.1.0",
     "babylonjs-loaders": "^4.1.0",
     "babylonjs-materials": "^4.1.0",
+    "lodash": "^4.17.20",
     "ts-events": "^3.4.0"
   },
   "devDependencies": {

@@ -5,6 +5,7 @@ import ENV from '../environnement';
 import Helpers from '../libraries/helpers';
 import * as GUI from 'babylonjs-gui';
 import * as ANIMATIONS from '../animations';
+import * as _ from 'lodash';
 
 // Constants
 
@@ -43,6 +44,8 @@ export default class FloorsScene extends Scene{
 
         this.getFloors(building_id).then(floors => {
             this.floors = floors;
+            // Sort floor by index
+            this.floors = _.orderBy(this.floors, ['index'], ['desc']);
             this.floorsLoaded();
         }, error => {
             console.log(error);
@@ -126,6 +129,11 @@ export default class FloorsScene extends Scene{
         });
     }
 
+    /**
+     * @description Display another floor
+     * @param newFloor
+     * @private
+     */
     private changeFloor(newFloor: number): void{
         if(newFloor > this.floors.length - 1)
             newFloor = this.floors.length - 1;
@@ -149,6 +157,10 @@ export default class FloorsScene extends Scene{
 
     }
 
+    /**
+     * @description Add GUI to scene
+     * @private
+     */
     private addUi(): void{
         let buttonUp: GUI.Button = GUI.Button.CreateSimpleButton('buttonUp', '🔼');
         buttonUp.width = 1;
