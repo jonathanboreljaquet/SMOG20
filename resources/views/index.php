@@ -56,46 +56,40 @@
 
     <canvas id="renderCanvas" style="z-index: 1;position:absolute; margin-top:0px; "></canvas>
     <script src="bundle.js"></script>
-
-
-
-
     <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
-</body>
 
+    <div class="modal" id="modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Modal title</p>
+                <button onclick="closeModal()" class="delete" aria-label="close" onclick="closeModal"></button>
+            </header>
+            <section class="modal-card-body">
+                <div>
+                    <ul id="Schedule_ul">
 
-<div class="modal" id="modal">
-    <div class="modal-background"></div>
-    <div class="modal-card">
-        <header class="modal-card-head">
-            <p class="modal-card-title">Modal title</p>
-            <button onclick="closeModal()" class="delete" aria-label="close" onclick="closeModal"></button>
-        </header>
-        <section class="modal-card-body">
-            <div>
-                <ul id="Schedule_ul">
+                    </ul>
 
-                </ul>
-
-            </div>
-        </section>
-        <footer class="modal-card-foot">
-            <button class="button is-success">Save changes</button>
-            <button class="button">Cancel</button>
-        </footer>
+                </div>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success">Save changes</button>
+                <button class="button" onclick="closeModal()">Cancel</button>
+            </footer>
+        </div>
     </div>
-</div>
-<script>
-    function closeModal() {
-        document.getElementById("modal").classList.remove("is-active");
-        modal.classList.toggle('modal-close');
-    }
+    <script>
+        function closeModal() {
+            document.getElementById("modal").classList.remove("is-active");
+            modal.classList.toggle('modal-close');
+        }
 
-    function openModal() {
-        document.getElementById("modal").classList.remove("modal-close");
-        modal.classList.toggle('is-active');
-    }
-</script>
-
+        function openModal() {
+            document.getElementById("modal").classList.remove("modal-close");
+            modal.classList.toggle('is-active');
+        }
+    </script>
+</body>
 
 </html>
