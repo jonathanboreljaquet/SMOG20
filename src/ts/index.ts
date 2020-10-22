@@ -5,33 +5,32 @@ import ENV from "./environnement";
 
 let canvas = document.getElementById("renderCanvas") as HTMLCanvasElement;
 let engine = new Engine(canvas);
-getFloors(1);
-getSchedule(2);
-function getFloors(building_id: number): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
+
+getBuildings();
+// getSchedule(2);
+
+function getBuildings(): void {
         axios
-            .post(ENV.API_ENDPOINT + "buildings", {
-                building_id: building_id,
-            })
+            .post(ENV.API_ENDPOINT + "buildings")
             .then(
-                (response) => {
-                    resolve(response.data);
+                response => {
                     console.log(response);
-                    let html = "";
-                    for (let index = 0; index < response.data.length; index++) {
-                        html +=
-                            '<a class="dropdown-item" href = "#" > ' +
-                            response.data[index].name +
-                            " </a>";
+                    let dropdown = document.getElementById("link_batiment");
+                    dropdown.innerHTML = '';
+                    for (let building of response.data) {
+                        let link = document.createElement('a');
+                        link.classList.add('dropdown-item');
+                        link.innerText = building.name;
+                        link.addEventListener('click', () => {
+                            engine.loadBuilding(building.id);
+                        });
+                        dropdown.appendChild(link);
                     }
-                    document.getElementById("link_batiment").innerHTML = html;
                 },
-                (error) => {
-                    reject(error);
+                error => {
+                    console.error(error);
                 }
-            )
-            .finally();
-    });
+            );
 }
 
 function getSchedule(classroom_id: number): Promise<any> {
@@ -53,10 +52,9 @@ function getSchedule(classroom_id: number): Promise<any> {
                     }
                     document.getElementById("Schedule_ul").innerHTML = html;
                 },
-                (error) => {
+                error => {
                     reject(error);
                 }
-            )
-            .finally();
+            );
     });
 }

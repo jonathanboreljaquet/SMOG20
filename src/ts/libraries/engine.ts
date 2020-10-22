@@ -62,4 +62,8 @@ export default class Engine {
         if(!oldScene.keep)
         oldScene.dispose();
     }
+
+    public loadBuilding(id: number): void{
+        this.changeScene(new FloorsScene(this.engine, this.canvas, id));
+    }
 }

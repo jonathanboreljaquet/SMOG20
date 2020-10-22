@@ -18,6 +18,6 @@ class BuildingController extends Controller
 
     public function all()
     {
-        return Building::select("name")->get();
+        return Building::get();
     }
 }
