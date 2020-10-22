@@ -25,6 +25,10 @@ let animationVisibility = (from: number, to: number) => {
             value: from
         },
         {
+          frame: (from > to ? frameRate - 2 : 2),
+            value: (from > to ? from : to)
+        },
+        {
             frame: frameRate,
             value: to
         }
