@@ -23,4 +23,12 @@ class Floor extends Model
      * @var array
      */
     protected $hidden = [];
+
+    /**
+     * Get classrooms of the floor
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function classrooms(){
+        return $this->hasMany('App\Classroom', 'floor');
+    }
 }

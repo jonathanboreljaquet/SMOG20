@@ -14,7 +14,7 @@ class Classroom extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'name', 'path_image', 'floor'
+        'id', 'name', 'path_image', 'location_x', 'location_z', 'floor'
     ];
 
     /**

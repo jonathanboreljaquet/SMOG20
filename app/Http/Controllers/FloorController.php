@@ -28,7 +28,7 @@ class FloorController extends Controller
         if ($building == null) {
             return response('Building not found', 404);
         }else{
-            return Floor::select('id', 'name', 'path_plan', 'index')->where('building', '=', $building->id)->get();
+            return Floor::select('id', 'name', 'path_plan', 'index')->with('classrooms')->where('building', '=', $building->id)->get();
         }
     }
 

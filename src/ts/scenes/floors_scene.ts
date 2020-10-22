@@ -12,11 +12,11 @@ import * as _ from 'lodash';
 const SCENE_DEFAULT_BACKCOLOR: BABYLON.Color4 = new BABYLON.Color4(0, 0, 0, 1);
 
 const CAMERA_UPPER_LIMIT: number = Math.PI / 2.2;
-const CAMERA_MIN_RADIUS: number = 200;
+const CAMERA_MIN_RADIUS: number = 30;
 const CAMERA_MAX_RADIUS: number = 3;
 const CAMERA_DEFAULT_ALPHA: number = 0;
 const CAMERA_DEFAULT_BETA: number = Math.PI * 70 / 180;
-const CAMERA_DEFAULT_RADIUS: number = 7;
+const CAMERA_DEFAULT_RADIUS: number = 5;
 
 
 export default class FloorsScene extends Scene{
@@ -102,20 +102,55 @@ export default class FloorsScene extends Scene{
      * @private
      */
     private floorsLoaded(){
+        console.log(this.floors);
         let promises = [];
         this.floors.forEach((floor, index) => {
             promises.push(new Promise<any>((resolve, reject) => {
                 BABYLON.SceneLoader.ImportMesh('', ENV.MESHES_FOLDER + floor.path_plan + '.babylon', '', this.scene, meshes => {
+                    // Link meshes to parent
                     for(let i = 1; i< meshes.length; i++){
                         meshes[i].parent = meshes[0];
                     }
                     floor.meshes = meshes;
+                    floor.labels = [];
+                    // Add classrooms label
+                    for(let classroom of floor.classrooms){
+                        let anchor: BABYLON.AbstractMesh = new BABYLON.AbstractMesh('anchor', this.scene);
+
+                        let text = new GUI.TextBlock();
+                        text.text = classroom.name;
+                        text.color = 'white';
+                        text.fontSize = '15px';
+
+                        let label = new GUI.Rectangle('label');
+                        label.background = 'black';
+                        label.color = 'white';
+                        label.height = '25px';
+                        label.width = '50px';
+                        label.cornerRadius = 5;
+                        label.thickness = 1;
+                        label.linkOffsetY = -50;
+                        label.zIndex = -1;
+                        label.addControl(text);
+                        this.advancedTexture.addControl(label);
+                        label.linkWithMesh(anchor);
+
+                        anchor.position.x = classroom.location_x;
+                        anchor.position.z = classroom.location_z;
+                        anchor.parent = meshes[0];
+                        floor.meshes.push(anchor);
+                        floor.labels.push(label);
+                    }
+                    // Set inital floor state
                     if (floor.index == 0){
                         this.currentFloorIndex = index;
                     }
                     else{
                         for(let mesh of meshes){
                             mesh.visibility = 0;
+                        }
+                        for (let label of floor.labels){
+                            label.isVisible = false;
                         }
                     }
                     resolve();
@@ -143,13 +178,15 @@ export default class FloorsScene extends Scene{
             return;
 
         this.scene.beginDirectAnimation(this.floors[this.currentFloorIndex].meshes[0], [newFloor > this.currentFloorIndex ? ANIMATIONS.animationTransitionY(0, 10) : ANIMATIONS.animationTransitionY(0, -10)], 0, ANIMATIONS.frameRate, false);
-        for(let mesh of this.floors[this.currentFloorIndex].meshes){
+        for(let mesh of this.floors[this.currentFloorIndex].meshes)
             this.scene.beginDirectAnimation(mesh, [ANIMATIONS.animationVisibility(1, 0)], 0, ANIMATIONS.frameRate, false);
-        }
+        for(let label of this.floors[this.currentFloorIndex].labels)
+            label.isVisible = false;
         this.scene.beginDirectAnimation(this.floors[newFloor].meshes[0], [newFloor > this.currentFloorIndex ? ANIMATIONS.animationTransitionY(-10, 0) : ANIMATIONS.animationTransitionY(10, 0)], 0, ANIMATIONS.frameRate, false);
-        for(let mesh of this.floors[newFloor].meshes){
+        for(let mesh of this.floors[newFloor].meshes)
             this.scene.beginDirectAnimation(mesh, [ANIMATIONS.animationVisibility(0, 1)], 0, ANIMATIONS.frameRate, false);
-        }
+        for(let label of this.floors[newFloor].labels)
+            label.isVisible = true;
 
         this.currentFloorIndex = newFloor;
         this.labelCurrentFloor.text = this.floors[this.currentFloorIndex].index.toString();
