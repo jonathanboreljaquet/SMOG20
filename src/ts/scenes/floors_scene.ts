@@ -1,5 +1,6 @@
 import * as BABYLON from 'babylonjs';
 import Scene from './scene';
+import ClassroomScene from './classroom_scene';
 import axios from 'axios';
 import ENV from '../environnement';
 import Helpers from '../libraries/helpers';
@@ -122,7 +123,7 @@ export default class FloorsScene extends Scene{
                         text.color = 'white';
                         text.fontSize = '15px';
 
-                        let label = new GUI.Rectangle('label');
+                        let label = new GUI.Button('label');
                         label.background = 'black';
                         label.color = 'white';
                         label.height = '25px';
@@ -134,6 +135,10 @@ export default class FloorsScene extends Scene{
                         label.addControl(text);
                         this.advancedTexture.addControl(label);
                         label.linkWithMesh(anchor);
+                        label.onPointerClickObservable.add(() => {
+                            if(label.isVisible)
+                               this.changeScene(new ClassroomScene(this.engine, this.canvas, classroom.path_image, this));
+                        });
 
                         anchor.position.x = classroom.location_x;
                         anchor.position.z = classroom.location_z;
