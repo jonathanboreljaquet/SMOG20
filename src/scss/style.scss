@@ -12,5 +12,6 @@ body {
     font-family: "Lato", sans-serif;
 }
 
+@import "../../node_modules/bulma/bulma";
 @import "./canvas.scss";
 @import "./navbar.scss";

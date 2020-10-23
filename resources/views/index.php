@@ -10,7 +10,6 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
 
 </head>
 
@@ -56,7 +55,6 @@
 
     <canvas id="renderCanvas" style="z-index: 1;position:absolute; margin-top:0px; "></canvas>
     <script src="bundle.js"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
 
     <div class="modal" id="modal">
         <div class="modal-background"></div>

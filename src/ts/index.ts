@@ -2,6 +2,7 @@ import "../scss/style.scss";
 import Engine from "./libraries/engine";
 import axios from "axios";
 import ENV from "./environnement";
+import "@fortawesome/fontawesome-free/js/all.js";
 
 let canvas = document.getElementById("renderCanvas") as HTMLCanvasElement;
 let engine = new Engine(canvas);
