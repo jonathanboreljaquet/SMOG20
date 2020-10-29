@@ -15,7 +15,7 @@ const CAMERA_MIN_RADIUS: number = 200;
 const CAMERA_MAX_RADIUS: number = 20;
 const CAMERA_DEFAULT_ALPHA: number = 0;
 const CAMERA_DEFAULT_BETA: number = Math.PI / 2.4;
-const CAMERA_DEFAULT_RADIUS: number = 40;
+const CAMERA_DEFAULT_RADIUS: number = 90;
 
 export default class BuildingsScene extends Scene {
     // Fields
@@ -43,18 +43,18 @@ export default class BuildingsScene extends Scene {
 
         this.light = new BABYLON.HemisphericLight('plan_scene_light', new BABYLON.Vector3(0, 1, 0), this.scene);
 
-        BABYLON.SceneLoader.ImportMesh("", ENV.MESHES_FOLDER + "cfptrhonetest.babylon", "", this.scene, (meshes)=>  {
+        BABYLON.SceneLoader.ImportMesh("", ENV.MESHES_FOLDER + "cfptrhone.babylon", "", this.scene, (meshes)=>  {
             meshes[0].scaling = new Vector3(1,1,1);
             meshes[0].actionManager = new BABYLON.ActionManager(this.scene);
-            meshes[0].position =new Vector3(0,1,0);
+            meshes[0].position =new Vector3(0,0,-13);
             meshes[0].actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger, () => {
-                this.changeScene(new ClassroomScene(engine, canvas,"test.jpg",this));
+                this.changeScene(new FloorsScene(engine, canvas,1));
             }));
         });
         BABYLON.SceneLoader.ImportMesh("", ENV.MESHES_FOLDER + "cfpthorlogerietest.babylon", "", this.scene, (meshes)=>  {
             meshes[0].scaling = new Vector3(1,1,1);
             meshes[0].actionManager = new BABYLON.ActionManager(this.scene);
-            meshes[0].position = new Vector3(0,1,-10);
+            meshes[0].position = new Vector3(0,1,-30);
             meshes[0].actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger, () => {
                 this.changeScene(new FloorsScene(engine, canvas));
             }));
@@ -62,7 +62,7 @@ export default class BuildingsScene extends Scene {
         BABYLON.SceneLoader.ImportMesh("", ENV.MESHES_FOLDER + "cfptterniertest.babylon", "", this.scene, (meshes)=>  {
             meshes[0].scaling = new Vector3(1,1,1);
             meshes[0].actionManager = new BABYLON.ActionManager(this.scene);
-            meshes[0].position = new Vector3(0,1,10);
+            meshes[0].position = new Vector3(0,1,30);
             meshes[0].actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger, () => {
                 this.changeScene(new FloorsScene(engine, canvas));
             }));
