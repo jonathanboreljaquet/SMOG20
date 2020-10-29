@@ -7,7 +7,12 @@ use Symfony\Component\Console\Input\InputOption;
 use App\Building;
 use App\Floor;
 use App\Classroom;
+use App\Subject;
+use App\Professor;
+use App\Classe;
+use App\Lesson;
 use Illuminate\Support\Facades\DB;
+use ParseCsv\Csv;
 
 /**
  * Class InsertData
@@ -16,6 +21,29 @@ use Illuminate\Support\Facades\DB;
  */
 class InsertData extends Command
 {
+    private const CSV_DIRECTORY_VAR_ENV_NAME = 'CSV_DIRECTORY';
+    private const CSV_DEFAULT_DIRECTORY = 'database';
+    private const CLASSES_FILENAME = 'classes.csv';
+    private const LESSONS_FILENAME = 'lessons.csv';
+    private const SUBJECTS_FILENAME = 'subjects.csv';
+    private const TEACHERS_FILENAME = 'teachers.csv';
+    private const BUILDINGS_FILENAME = 'buildings.csv';
+    private const FLOORS_FILENAME = 'floors.csv';
+    private const CLASSROOMS_FILENAME = 'classrooms.csv';
+    private const CSV_LESSONS_NB_COLUMNS = 19;
+    private const CSV_SUBJECTS_NB_COLUMNS = 2;
+    private const CSV_TEACHERS_NB_COLUMNS = 2;
+    private const CSV_CLASSES_NB_COLUMNS = 2;
+    private const CSV_BUILDINGS_NB_COLUMNS = 3;
+    private const CSV_FLOORS_NB_COLUMNS = 4;
+    private const CSV_CLASSROOMS_NB_COLUMNS = 6;
+    private const DAYS_TRANSLATIONS = [
+        'MON' => 'lundi',
+        'TUES' => 'mardi',
+        'WED' => 'mercredi',
+        'THURS' => 'jeudi',
+        'FRI' => 'vendredi'
+    ];
     /**
      * The console command name.
      *
@@ -37,49 +65,150 @@ class InsertData extends Command
      */
     public function handle()
     {
+        // Clear tables
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Building::truncate();
         Floor::truncate();
         Classroom::truncate();
+        Subject::truncate();
+        Professor::truncate();
+        Classe::truncate();
+        Lesson::truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        $rhone = new Building();
-        $rhone->name = 'Rhône';
-        $rhone->path_plan = 'cfptrhonetest';
-        $rhone->address = 'Chemin Gérard-De-Ternier 10, 1213 Lancy';
-        $rhone->save();
+        $dir = __DIR__ . '/../../../' . env(self::CSV_DIRECTORY_VAR_ENV_NAME, self::CSV_DEFAULT_DIRECTORY) . '/';
+        if(!$this->checkFilesExists($dir)){
+            return;
+        }
 
-        $rhone_floor_0 = new Floor();
-        $rhone_floor_0->name = 'Ground floor';
-        $rhone_floor_0->path_plan = 'rhone';
-        $rhone_floor_0->index = 0;
-        $rhone_floor_0->building = $rhone->id;
-        $rhone_floor_0->save();
+        $classes = [];
+        $teachers = [];
+        $subjects = [];
+        $buildings = [];
+        $floors = [];
+        $classrooms = [];
 
-        $rhone_floor_1 = new Floor();
-        $rhone_floor_1->name = '1st';
-        $rhone_floor_1->path_plan = 'rhone';
-        $rhone_floor_1->index = 1;
-        $rhone_floor_1->building = $rhone->id;
-        $rhone_floor_1->save();
+        $classesCsv = $this->readCsv($dir . self::CLASSES_FILENAME);
+        $teachersCsv = $this->readCsv($dir . self::TEACHERS_FILENAME);
+        $subjectsCsv = $this->readCsv($dir . self::SUBJECTS_FILENAME);
+        $lessonsCsv = $this->readCsv($dir . self::LESSONS_FILENAME);
+        $buildingsCsv = $this->readCsv($dir . self::BUILDINGS_FILENAME);
+        $floorsCsv = $this->readCsv($dir . self::FLOORS_FILENAME);
+        $classroomsCsv = $this->readCsv($dir . self::CLASSROOMS_FILENAME);
 
-        $rhone_room_1_04 = new Classroom();
-        $rhone_room_1_04->name = 'R1.04';
-        $rhone_room_1_04->path_image = 'test.jpg';
-        $rhone_room_1_04->location_x = -1;
-        $rhone_room_1_04->location_z = 0.3;
-        $rhone_room_1_04->floor = $rhone_floor_1->id;
-        $rhone_room_1_04->save();
+        // Insert buildings
 
-        $rhone_room_1_05 = new Classroom();
-        $rhone_room_1_05->name = 'R1.05';
-        $rhone_room_1_05->path_image = 'test.jpg';
-        $rhone_room_1_05->location_x = -0.9;
-        $rhone_room_1_05->location_z = -0.6;
-        $rhone_room_1_05->floor = $rhone_floor_1->id;
-        $rhone_room_1_05->save();
+        foreach ($buildingsCsv->data as $line){
+            if(count($line) == self::CSV_BUILDINGS_NB_COLUMNS){
+                $building = new Building();
+                $building->name = $line[0];
+                $building->path_plan = $line[1];
+                $building->address = $line[2];
+                $building->save();
+                $buildings[] = $building;
+            }
+        }
 
-        echo 'Done';
+        // Insert floors
+
+        foreach ($floorsCsv->data as $line){
+            if(count($line) == self::CSV_FLOORS_NB_COLUMNS){
+                $floor = new Floor();
+                $floor->name = $line[0];
+                $floor->path_plan = $line[1];
+                $floor->index = $line[2];
+                $building = $this->GetBuildingFromName($buildings, $line[3]);
+                $floor->building = $building != null ? $building->id : 1;
+                $floor->save();
+                $floor->buildingName = $building != null ? $building->name : null;
+                $floors[] = $floor;
+            }
+        }
+
+        // Insert classrooms
+
+        foreach ($classroomsCsv->data as $line){
+            if(count($line) == self::CSV_CLASSROOMS_NB_COLUMNS){
+                $classroom = new Classroom();
+                $classroom->name = $line[0];
+                $classroom->path_image = $line[3];
+                $classroom->location_x = $line[4];
+                $classroom->location_z = $line[5];
+                $floor = $this->GetFloorFromBuildingNameAndIndex($floors, $line[1], $line[2]);
+                $classroom->floor = $floor != null ? $floor->id : 1;
+                $classroom->save();
+                $classrooms[] = $classroom;
+            }
+        }
+
+        // Import Subjects
+
+        foreach ($subjectsCsv->data as $line){
+            if(count($line) == self::CSV_SUBJECTS_NB_COLUMNS){
+                $subject = new Subject();
+                $subject->name = $line[1];
+                $subject->save();
+                $subject->sourceId = $line[0];
+                $subjects[] = $subject;
+            }
+        }
+
+        // Import teachers
+
+        foreach ($teachersCsv->data as $line){
+            if(count($line) == self::CSV_TEACHERS_NB_COLUMNS){
+                $teacher = new Professor();
+                $teacher->name = $line[1];
+                $teacher->save();
+                $teacher->sourceId = $line[0];
+                $teachers[] = $teacher;
+            }
+        }
+
+        // Import classes
+
+        foreach ($classesCsv->data as $line){
+            if (count($line) == self::CSV_CLASSES_NB_COLUMNS){
+                $classe = new Classe();
+                $classe->name = $line[1];
+                $classe->save();
+                $classe->sourceId = $line[0];
+                $classes[] = $classe;
+            }
+        }
+
+        // Import lessons
+
+        foreach ($lessonsCsv->data as $line){
+            if(count($line) == self::CSV_LESSONS_NB_COLUMNS){
+                $lesson = new Lesson();
+                $lesson->day = array_key_exists($line[1], self::DAYS_TRANSLATIONS) ? self::DAYS_TRANSLATIONS[$line[1]] : '';
+                $lesson->h01 = $line[2];
+                $lesson->h02 = $line[3];
+                $lesson->h03 = $line[4];
+                $lesson->h04 = $line[5];
+                $lesson->h05 = $line[6];
+                $lesson->h06 = $line[7];
+                $lesson->h07 = $line[8];
+                $lesson->h08 = $line[9];
+                $lesson->h09 = $line[10];
+                $lesson->h10 = $line[11];
+                $lesson->h11 = $line[12];
+                $lesson->h12 = $line[13];
+                $lesson->firstweek = $line[14];
+                $lesson->nbweeks = $line[15];
+                $subject = $this->GetSubjectFromSourceId($subjects, $line[16]);
+                $lesson->subject = $subject != null ? $subject->id : 1;
+                $teacher = $this->GetTeacherFromSourceId($teachers, $line[17]);
+                $lesson->professor = $teacher != null ? $teacher->id : 1;
+                $classroom = $line[18] != '-' ? $this->GetClassroomFromName($classrooms, $line[18]) : null;
+                $lesson->classroom = $classroom != null ? $classroom->id : 1;
+                $lesson->class = 1; // Unknown
+                $lesson->save();
+            }
+        }
+
+        echo PHP_EOL .  'Done';
     }
 
     /**
@@ -92,4 +221,75 @@ class InsertData extends Command
         return [];
     }
 
+    private function GetSubjectFromSourceId($subjects, $sourceId){
+        foreach ($subjects as $subject){
+            if ($subject->sourceId == $sourceId){
+                return $subject;
+            }
+        }
+        return null;
+    }
+
+    private function GetTeacherFromSourceId($teachers, $sourceId){
+        foreach ($teachers as $teacher){
+            if($teacher->sourceId == $sourceId){
+                return $teacher;
+            }
+        }
+        return null;
+    }
+
+    private function GetBuildingFromName($buildings, $name){
+        foreach ($buildings as $building){
+            if($building->name == $name){
+                return $building;
+            }
+        }
+        return null;
+    }
+
+    private function GetFloorFromBuildingNameAndIndex($floors, $buildingName, $index){
+        if($buildingName != null){
+            foreach ($floors as $floor){
+                if($floor->buildingName == $buildingName && $floor->index == $index){
+                    return $floor;
+                }
+            }
+        }
+        return null;
+    }
+
+    private function GetClassroomFromName($classrooms, $name){
+        foreach ($classrooms as $classroom){
+            if($classroom->name == $name){
+                return $classroom;
+            }
+        }
+        return null;
+    }
+
+    private function readCsv(string $filename, bool $header = false){
+        $csv = new Csv();
+        $csv->heading = $header;
+        $csv->parse($filename);
+        return $csv;
+    }
+
+    private function checkFilesExists(string $dir): bool{
+        foreach ([self::CLASSES_FILENAME, self::LESSONS_FILENAME, self::SUBJECTS_FILENAME, self::TEACHERS_FILENAME, self::BUILDINGS_FILENAME, self::FLOORS_FILENAME, self::CLASSROOMS_FILENAME] as $filename){
+            if(!$this->checkFileExists($dir . $filename)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private function checkFileExists(string $file): bool{
+        if(!file_exists($file)){
+            echo PHP_EOL . 'Error: ' . $file . ' not found';
+            return false;
+        }else{
+            return true;
+        }
+    }
 }
