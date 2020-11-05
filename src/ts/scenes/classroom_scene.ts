@@ -4,6 +4,8 @@ import BuildingsScene from './buildings_scene';
 import ENV from '../environnement';
 import * as GUI from 'babylonjs-gui';
 import FloorsScene from './floors_scene';
+import * as moment from 'moment';
+import axios from 'axios';
 
 // Constants
 
@@ -69,8 +71,31 @@ export default class ClassroomScene extends Scene{
             this.changeScene(previousScene);
         });
         advancedTexture.addControl(button);
-    }
 
-    // Methods
-    // ...
+        //TODO Afficher horaire dans div
+    }
+    
+    getSchedule(classroom_id: number,nbr_week :number): void {
+        axios
+            .post(ENV.API_ENDPOINT + "schedule", {
+                classroom_id: classroom_id,
+                nbr_week: nbr_week,
+            })
+            .then(
+                (response) => {
+                    console.log(response);
+                    let html = "";
+                    for (let index = 0; index < response.data.length; index++) {
+                        html +=
+                            '<li> ' +
+                            response.data[index].day +
+                            " </li>";
+                    }
+                    document.getElementById("Schedule_ul").innerHTML = html;
+                },
+                error => {
+                    console.error(error);
+                }
+            );
+}
 }

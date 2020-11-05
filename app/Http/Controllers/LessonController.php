@@ -26,16 +26,19 @@ class LessonController extends Controller
 
     public function classSchedule(Request $request)
     {
-        // $this->validate($request, [
-        //     'classroom_id' => 'required|numeric'
-        // ]);
+        $this->validate($request, [
+            'classroom_id' => 'required|numeric',
+            'nbr_week' => 'required|numeric'
+        ]);
 
-        // if (!Classroom::where('id', '=', $request->classroom_id)->exists()) {
-        //     return response('Classroom not found', 404);
-        // } else {
-        //     DB::table('lessons')
-        //     ->join('professors', 'lessons', '=')
-        //     return Lesson::where('classroom', '=', $request->classroom_id)->get();
-        // }
+        if (!Classroom::where('id', '=', $request->classroom_id)->exists()) {
+            return response('Classroom not found', 404);
+        } else {
+            return Lesson::where([
+                [DB::RAW(' firstweek + nbweeks'), '>', $request->nbr_week],
+                ['firstweek', '<', $request->nbr_week],
+                ['classroom', '=', $request->classroom_id]
+            ])->get();
+        }
     }
 }

@@ -3,14 +3,16 @@ import Engine from "./libraries/engine";
 import axios from "axios";
 import ENV from "./environnement";
 import "@fortawesome/fontawesome-free/js/all.js";
+import * as moment from "moment";
 
 let canvas = document.getElementById("renderCanvas") as HTMLCanvasElement;
 let engine = new Engine(canvas);
 
+
 getBuildings();
-// getSchedule(2);
 
 function getBuildings(): void {
+    
         axios
             .post(ENV.API_ENDPOINT + "buildings")
             .then(
@@ -34,28 +36,4 @@ function getBuildings(): void {
             );
 }
 
-function getSchedule(classroom_id: number): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
-        axios
-            .post(ENV.API_ENDPOINT + "schedule", {
-                classroom_id: classroom_id,
-            })
-            .then(
-                (response) => {
-                    resolve(response.data);
-                    console.log(response);
-                    let html = "";
-                    for (let index = 0; index < response.data.length; index++) {
-                        html +=
-                            '<li> ' +
-                            response.data[index].day +
-                            " </li>";
-                    }
-                    document.getElementById("Schedule_ul").innerHTML = html;
-                },
-                error => {
-                    reject(error);
-                }
-            );
-    });
-}
+
