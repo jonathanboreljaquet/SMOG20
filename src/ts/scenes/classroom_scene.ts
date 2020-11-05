@@ -25,7 +25,7 @@ export default class ClassroomScene extends Scene{
 
     // Constructor
 
-    public constructor(engine: BABYLON.Engine, canvas: HTMLCanvasElement,imgName: string,previousScene: Scene){
+    public constructor(engine: BABYLON.Engine, canvas: HTMLCanvasElement,imgName: string,previousScene: FloorsScene){
         super(new BABYLON.Scene(engine));
         this.scene.clearColor = SCENE_DEFAULT_BACKCOLOR;
         this.camera = new BABYLON.ArcRotateCamera(
@@ -68,6 +68,7 @@ export default class ClassroomScene extends Scene{
         button.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
         button.onPointerDownObservable.add(() => {
             previousScene.keep = true;
+            previousScene.attachControl();
             this.changeScene(previousScene);
         });
         advancedTexture.addControl(button);

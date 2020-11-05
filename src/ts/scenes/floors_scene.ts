@@ -99,7 +99,7 @@ export default class FloorsScene extends Scene{
             this.scene
         );
 
-        this.camera.attachControl(this.canvas, true);
+        this.attachControl();
         (this.camera.inputs.attached.pointers as BABYLON.ArcRotateCameraPointersInput).buttons = [0];
         this.camera.upperBetaLimit = CAMERA_UPPER_LIMIT;
         this.camera.lowerRadiusLimit = CAMERA_MAX_RADIUS;
@@ -132,7 +132,6 @@ export default class FloorsScene extends Scene{
      * @private
      */
     private floorsLoaded(){
-        console.log(this.floors);
         let promises = [];
         this.floors.forEach((floor, index) => {
             promises.push(new Promise<any>((resolve, reject) => {
@@ -165,8 +164,10 @@ export default class FloorsScene extends Scene{
                         this.advancedTexture.addControl(label);
                         label.linkWithMesh(anchor);
                         label.onPointerClickObservable.add(() => {
-                            if(label.isVisible)
-                               this.changeScene(new ClassroomScene(this.engine, this.canvas, classroom.path_image, this));
+                            if(label.isVisible){
+                                this.detachControl();
+                                this.changeScene(new ClassroomScene(this.engine, this.canvas, classroom.path_image, this));
+                            }
                         });
 
                         anchor.position.x = classroom.location_x;
@@ -271,5 +272,12 @@ export default class FloorsScene extends Scene{
         panel.addControl(buttonDown);
 
         this.advancedTexture.addControl(panel);
+    }
+
+    public detachControl(): void{
+        this.camera.detachControl(this.canvas);
+    }
+    public attachControl(): void{
+        this.camera.attachControl(this.canvas, true);
     }
 }
