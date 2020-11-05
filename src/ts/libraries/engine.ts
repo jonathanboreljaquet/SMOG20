@@ -11,11 +11,6 @@ export default class Engine {
     private canvas: HTMLCanvasElement;
     private navLinks = [
         {
-            id: "btnHome",
-            scene: BuildingsScene,
-            params: [],
-        },
-        {
             id: "sidebar_link_floors_scene",
             scene: FloorsScene,
             params: [1],

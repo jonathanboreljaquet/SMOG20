@@ -30,9 +30,6 @@
 
         <div class="navbar-menu">
             <div class="navbar-start">
-                <a class="navbar-item" id="btnHome">
-                    Home
-                </a>
 
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
