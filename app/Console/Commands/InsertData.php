@@ -30,7 +30,7 @@ class InsertData extends Command
     private const BUILDINGS_FILENAME = 'buildings.csv';
     private const FLOORS_FILENAME = 'floors.csv';
     private const CLASSROOMS_FILENAME = 'classrooms.csv';
-    private const CSV_LESSONS_NB_COLUMNS = 19;
+    private const CSV_LESSONS_NB_COLUMNS = 20;
     private const CSV_SUBJECTS_NB_COLUMNS = 2;
     private const CSV_TEACHERS_NB_COLUMNS = 2;
     private const CSV_CLASSES_NB_COLUMNS = 2;
@@ -66,6 +66,9 @@ class InsertData extends Command
     public function handle()
     {
         // Clear tables
+
+        echo PHP_EOL . 'Clear tables';
+
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Building::truncate();
         Floor::truncate();
@@ -75,6 +78,8 @@ class InsertData extends Command
         Classe::truncate();
         Lesson::truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        echo PHP_EOL . 'ok';
 
         $dir = __DIR__ . '/../../../' . env(self::CSV_DIRECTORY_VAR_ENV_NAME, self::CSV_DEFAULT_DIRECTORY) . '/';
         if(!$this->checkFilesExists($dir)){
@@ -88,15 +93,26 @@ class InsertData extends Command
         $floors = [];
         $classrooms = [];
 
-        $classesCsv = $this->readCsv($dir . self::CLASSES_FILENAME);
-        $teachersCsv = $this->readCsv($dir . self::TEACHERS_FILENAME);
-        $subjectsCsv = $this->readCsv($dir . self::SUBJECTS_FILENAME);
-        $lessonsCsv = $this->readCsv($dir . self::LESSONS_FILENAME);
+        echo PHP_EOL . PHP_EOL . 'Read CSV';
+
+        $classesCsv = $this->readCsv($dir . self::CLASSES_FILENAME, true);
+        echo PHP_EOL . self::CLASSES_FILENAME . ' => ok';
+        $teachersCsv = $this->readCsv($dir . self::TEACHERS_FILENAME, true);
+        echo PHP_EOL . self::TEACHERS_FILENAME . ' => ok';
+        $subjectsCsv = $this->readCsv($dir . self::SUBJECTS_FILENAME, true);
+        echo PHP_EOL . self::SUBJECTS_FILENAME . ' => ok';
+        $lessonsCsv = $this->readCsv($dir . self::LESSONS_FILENAME, true);
+        echo PHP_EOL . self::LESSONS_FILENAME . ' => ok';
         $buildingsCsv = $this->readCsv($dir . self::BUILDINGS_FILENAME);
+        echo PHP_EOL . self::BUILDINGS_FILENAME . ' => ok';
         $floorsCsv = $this->readCsv($dir . self::FLOORS_FILENAME);
+        echo PHP_EOL . self::FLOORS_FILENAME . ' => ok';
         $classroomsCsv = $this->readCsv($dir . self::CLASSROOMS_FILENAME);
+        echo PHP_EOL . self::CLASSROOMS_FILENAME . ' => ok';
 
         // Insert buildings
+
+        echo PHP_EOL . PHP_EOL . 'Insert buildings';
 
         foreach ($buildingsCsv->data as $line){
             if(count($line) == self::CSV_BUILDINGS_NB_COLUMNS){
@@ -109,7 +125,11 @@ class InsertData extends Command
             }
         }
 
+        echo PHP_EOL . 'ok';
+
         // Insert floors
+
+        echo PHP_EOL . PHP_EOL . 'Insert floors';
 
         foreach ($floorsCsv->data as $line){
             if(count($line) == self::CSV_FLOORS_NB_COLUMNS){
@@ -125,7 +145,11 @@ class InsertData extends Command
             }
         }
 
+        echo PHP_EOL . 'ok';
+
         // Insert classrooms
+
+        echo PHP_EOL . PHP_EOL . 'Insert classrooms';
 
         foreach ($classroomsCsv->data as $line){
             if(count($line) == self::CSV_CLASSROOMS_NB_COLUMNS){
@@ -141,74 +165,97 @@ class InsertData extends Command
             }
         }
 
+        echo PHP_EOL . 'ok';
+
         // Import Subjects
+
+        echo PHP_EOL . PHP_EOL . 'Insert subjects';
 
         foreach ($subjectsCsv->data as $line){
             if(count($line) == self::CSV_SUBJECTS_NB_COLUMNS){
                 $subject = new Subject();
-                $subject->name = $line[1];
+                $subject->name = $line['label_short'];
                 $subject->save();
-                $subject->sourceId = $line[0];
+                $subject->sourceId = $line['id'];
                 $subjects[] = $subject;
             }
         }
 
+        echo PHP_EOL . 'ok';
+
         // Import teachers
+
+        echo PHP_EOL . PHP_EOL . 'Insert teachers';
 
         foreach ($teachersCsv->data as $line){
             if(count($line) == self::CSV_TEACHERS_NB_COLUMNS){
                 $teacher = new Professor();
-                $teacher->name = $line[1];
+                $teacher->name = $line['firstname_lastname'];
                 $teacher->save();
-                $teacher->sourceId = $line[0];
+                $teacher->sourceId = $line['id'];
                 $teachers[] = $teacher;
             }
         }
 
+        echo PHP_EOL . 'ok';
+
         // Import classes
+
+        echo PHP_EOL . PHP_EOL . 'Insert classes';
 
         foreach ($classesCsv->data as $line){
             if (count($line) == self::CSV_CLASSES_NB_COLUMNS){
                 $classe = new Classe();
-                $classe->name = $line[1];
+                $classe->name = $line['name'];
                 $classe->save();
-                $classe->sourceId = $line[0];
+                $classe->sourceId = $line['id'];
                 $classes[] = $classe;
             }
         }
 
+        echo PHP_EOL . 'ok';
+
         // Import lessons
+
+        echo PHP_EOL . PHP_EOL . 'Insert lessons';
 
         foreach ($lessonsCsv->data as $line){
             if(count($line) == self::CSV_LESSONS_NB_COLUMNS){
                 $lesson = new Lesson();
-                $lesson->day = array_key_exists($line[1], self::DAYS_TRANSLATIONS) ? self::DAYS_TRANSLATIONS[$line[1]] : '';
-                $lesson->h01 = $line[2];
-                $lesson->h02 = $line[3];
-                $lesson->h03 = $line[4];
-                $lesson->h04 = $line[5];
-                $lesson->h05 = $line[6];
-                $lesson->h06 = $line[7];
-                $lesson->h07 = $line[8];
-                $lesson->h08 = $line[9];
-                $lesson->h09 = $line[10];
-                $lesson->h10 = $line[11];
-                $lesson->h11 = $line[12];
-                $lesson->h12 = $line[13];
-                $lesson->firstweek = $line[14];
-                $lesson->nbweeks = $line[15];
-                $subject = $this->GetSubjectFromSourceId($subjects, $line[16]);
+                $lesson->day = array_key_exists($line['day'], self::DAYS_TRANSLATIONS) ? self::DAYS_TRANSLATIONS[$line['day']] : '';
+                $lesson->h01 = $line['H01'];
+                $lesson->h02 = $line['H02'];
+                $lesson->h03 = $line['H03'];
+                $lesson->h04 = $line['H04'];
+                $lesson->h05 = $line['H05'];
+                $lesson->h06 = $line['H06'];
+                $lesson->h07 = $line['H07'];
+                $lesson->h08 = $line['H08'];
+                $lesson->h09 = $line['H09'];
+                $lesson->h10 = $line['H10'];
+                $lesson->h11 = $line['H11'];
+                $lesson->h12 = $line['H12'];
+                $lesson->firstweek = $line['periods_first_week'];
+                $lesson->nbweeks = $line['periods_nb_weeks'];
+                $subject = $this->GetSubjectFromSourceId($subjects, $line['courses_id']);
                 $lesson->subject = $subject != null ? $subject->id : 1;
-                $teacher = $this->GetTeacherFromSourceId($teachers, $line[17]);
+                $teacher = $this->GetTeacherFromSourceId($teachers, $line['teachers_id']);
                 $lesson->professor = $teacher != null ? $teacher->id : 1;
-                $classroom = $line[18] != '-' ? $this->GetClassroomFromName($classrooms, $line[18]) : null;
+                $classroom = $line['room_name'] != '-' ? $this->GetClassroomFromName($classrooms, $line['room_name']) : null;
                 $lesson->classroom = $classroom != null ? $classroom->id : 1;
-                $lesson->class = 1; // Unknown
+                if($line['[classes_ids]'] != '-'){
+                    $class = $this->GetClassFromSourceId($classes, explode(',', str_ireplace(['[', ']'], '', $line['[classes_ids]']))[0]);
+                    $lesson->class = $class != null ? $class->id : 1;
+                }else{
+                    $lesson->class = 1;
+                }
                 $lesson->save();
             }
         }
 
-        echo PHP_EOL .  'Done';
+        echo PHP_EOL . 'ok';
+
+        echo PHP_EOL .  '--- Done ---';
     }
 
     /**
@@ -234,6 +281,15 @@ class InsertData extends Command
         foreach ($teachers as $teacher){
             if($teacher->sourceId == $sourceId){
                 return $teacher;
+            }
+        }
+        return null;
+    }
+
+    private function GetClassFromSourceId($classes, $sourceId){
+        foreach ($classes as $class){
+            if($class->sourceId == $sourceId){
+                return $class;
             }
         }
         return null;

@@ -1,3 +1,4 @@
+id,label_short
 140,"Module "
 3,"Module 100"
 15,"Module 104"
@@ -22,7 +23,6 @@
 151,"Module 158"
 56,"Module 159"
 45,"Module 183"
-157,"Module 212"
 26,"Module 213"
 40,"Module 214"
 95,"Module 226A"
@@ -106,7 +106,6 @@
 121,"Laboratoire Support Utilisateur"
 147,"Laboratoire WEB Design"
 62,"Laboratoire [EE] Laboratoire projets"
-158,"Laboratoire Multimédia"
 64,"Autre  [PAS] Base de données"
 66,"Autre  [PAS] C#"
 65,"Autre  [PAS] Projet"
