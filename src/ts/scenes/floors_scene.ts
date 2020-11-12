@@ -166,7 +166,7 @@ export default class FloorsScene extends Scene{
                         label.onPointerClickObservable.add(() => {
                             if(label.isVisible){
                                 this.detachControl();
-                                this.changeScene(new ClassroomScene(this.engine, this.canvas, classroom.path_image, this));
+                                this.changeScene(new ClassroomScene(this.engine, this.canvas, classroom.path_image, this,classroom.id));
                             }
                         });
 

@@ -35,10 +35,12 @@ class LessonController extends Controller
             return response('Classroom not found', 404);
         } else {
             return Lesson::where([
-                [DB::RAW(' firstweek + nbweeks'), '>', $request->nbr_week],
-                ['firstweek', '<', $request->nbr_week],
+                [DB::RAW(' firstweek + nbweeks'), '>=', $request->nbr_week],
+                ['firstweek', '<=', $request->nbr_week],
                 ['classroom', '=', $request->classroom_id]
-            ])->get();
+            ])
+            ->join("subjects","subjects.id","=","subject")
+            ->get();
         }
     }
 }
