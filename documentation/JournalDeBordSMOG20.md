@@ -13,5 +13,5 @@
 | je 22.10.2020 | Demande de création du fichier CSV avec les données de l'école auprès de M.Garshery afin de les inclure dans l'application, ajout des marqueurs sur les différents étages
 | je 29.10.2020 | Modélisation rapide du bâtiment de Rhône,test d'affichage des horaires, insertion des données CSV script "insert_data"
 | je 05.11.2020 | Création de différents éléments pour afficher les horaires d'une salle par rapport à la semaine actuel, modélisation du rez-de-chaussée et fix de la rotation de la caméra
-| je 12.11.2020 | Text     |
+| je 12.11.2020 | Affichage des horaires en brut pour chaque classe, modification de l'import CSV, suite de la documentation technique    |
 | je 19.11.2020 | Text     |
