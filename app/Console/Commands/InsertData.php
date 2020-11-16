@@ -67,7 +67,7 @@ class InsertData extends Command
     {
         // Clear tables
 
-        echo PHP_EOL . 'Clear tables';
+        echo PHP_EOL . 'Clear tables...';
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Building::truncate();
@@ -93,7 +93,7 @@ class InsertData extends Command
         $floors = [];
         $classrooms = [];
 
-        echo PHP_EOL . PHP_EOL . 'Read CSV';
+        echo PHP_EOL . PHP_EOL . 'Read CSV...';
 
         $classesCsv = $this->readCsv($dir . self::CLASSES_FILENAME, true);
         echo PHP_EOL . self::CLASSES_FILENAME . ' => ok';
@@ -112,7 +112,7 @@ class InsertData extends Command
 
         // Insert buildings
 
-        echo PHP_EOL . PHP_EOL . 'Insert buildings';
+        echo PHP_EOL . PHP_EOL . 'Insert buildings...';
 
         foreach ($buildingsCsv->data as $line){
             if(count($line) == self::CSV_BUILDINGS_NB_COLUMNS){
@@ -129,7 +129,7 @@ class InsertData extends Command
 
         // Insert floors
 
-        echo PHP_EOL . PHP_EOL . 'Insert floors';
+        echo PHP_EOL . PHP_EOL . 'Insert floors...';
 
         foreach ($floorsCsv->data as $line){
             if(count($line) == self::CSV_FLOORS_NB_COLUMNS){
@@ -149,7 +149,7 @@ class InsertData extends Command
 
         // Insert classrooms
 
-        echo PHP_EOL . PHP_EOL . 'Insert classrooms';
+        echo PHP_EOL . PHP_EOL . 'Insert classrooms...';
 
         foreach ($classroomsCsv->data as $line){
             if(count($line) == self::CSV_CLASSROOMS_NB_COLUMNS){
@@ -169,7 +169,7 @@ class InsertData extends Command
 
         // Import Subjects
 
-        echo PHP_EOL . PHP_EOL . 'Insert subjects';
+        echo PHP_EOL . PHP_EOL . 'Insert subjects...';
 
         foreach ($subjectsCsv->data as $line){
             if(count($line) == self::CSV_SUBJECTS_NB_COLUMNS){
@@ -185,7 +185,7 @@ class InsertData extends Command
 
         // Import teachers
 
-        echo PHP_EOL . PHP_EOL . 'Insert teachers';
+        echo PHP_EOL . PHP_EOL . 'Insert teachers...';
 
         foreach ($teachersCsv->data as $line){
             if(count($line) == self::CSV_TEACHERS_NB_COLUMNS){
@@ -201,7 +201,7 @@ class InsertData extends Command
 
         // Import classes
 
-        echo PHP_EOL . PHP_EOL . 'Insert classes';
+        echo PHP_EOL . PHP_EOL . 'Insert classes...';
 
         foreach ($classesCsv->data as $line){
             if (count($line) == self::CSV_CLASSES_NB_COLUMNS){
@@ -217,7 +217,7 @@ class InsertData extends Command
 
         // Import lessons
 
-        echo PHP_EOL . PHP_EOL . 'Insert lessons';
+        echo PHP_EOL . PHP_EOL . 'Insert lessons...';
 
         foreach ($lessonsCsv->data as $line){
             if(count($line) == self::CSV_LESSONS_NB_COLUMNS){
