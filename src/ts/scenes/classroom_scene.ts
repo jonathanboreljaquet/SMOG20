@@ -101,7 +101,6 @@ export default class ClassroomScene extends Scene{
             })
             .then(
                 (response) => {
-                    console.log(response);
                     // Clear schedule
                     this.scheduleGrid.innerHTML = '';
                     for (let hour = 1; hour <= this.NB_LESSONS_PER_DAY; hour++){
