@@ -13,5 +13,6 @@ body {
 }
 
 @import "../../node_modules/bulma/bulma";
-@import "./canvas.scss";
-@import "./navbar.scss";
+@import "./canvas";
+@import "./navbar";
+@import "./schedule";

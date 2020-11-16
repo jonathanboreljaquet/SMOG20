@@ -6,6 +6,7 @@ import * as GUI from 'babylonjs-gui';
 import FloorsScene from './floors_scene';
 import * as moment from 'moment';
 import axios from 'axios';
+import * as _ from 'lodash';
 
 // Constants
 
@@ -19,14 +20,22 @@ const CAMERA_DEFAULT_BETA: number = Math.PI / 2.4;
 const CAMERA_DEFAULT_RADIUS: number = 10;
 
 export default class ClassroomScene extends Scene{
+    // Constants
+    private readonly DAYS: Array<string> = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi'];
+    private readonly NB_LESSONS_PER_DAY: number = 12;
+
     // Fields
     private camera: BABYLON.ArcRotateCamera;
     private light: BABYLON.HemisphericLight;
+    private scheduleButton: HTMLElement;
+    private scheduleGrid: HTMLElement;
 
     // Constructor
 
     public constructor(engine: BABYLON.Engine, canvas: HTMLCanvasElement,imgName: string,previousScene: FloorsScene,id_classroom:number){
         super(new BABYLON.Scene(engine));
+        this.scheduleButton = document.getElementById('schedule_modale_button');
+        this.scheduleGrid = document.getElementById('schedule_grid');
         this.scene.clearColor = SCENE_DEFAULT_BACKCOLOR;
         this.camera = new BABYLON.ArcRotateCamera(
             'plan_scene_camera',
@@ -67,6 +76,7 @@ export default class ClassroomScene extends Scene{
         button.background = "black";
         button.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
         button.onPointerDownObservable.add(() => {
+            this.scheduleButton.style.display = 'none';
             previousScene.keep = true;
             previousScene.attachControl();
             this.changeScene(previousScene);
@@ -76,11 +86,12 @@ export default class ClassroomScene extends Scene{
         var currentDate :any = moment();//now
         var startSchoolYearDate: any = moment('2020-08-24T08:05:00');
         var numberWeek: any = currentDate.diff(startSchoolYearDate, 'weeks')
-        
+
         this.getSchedule(id_classroom,numberWeek);
+        this.scheduleButton.style.display = 'flex';
     }
-    
-    
+
+
 
     getSchedule(classroom_id: number,nbr_week :number): void {
         axios
@@ -90,80 +101,23 @@ export default class ClassroomScene extends Scene{
             })
             .then(
                 (response) => {
-                    var days: Array<string>;
-                    var coursLundi: Array<string>;
-                    var coursMardi: Array<string>;
-                    var coursMercredi: Array<string>;
-                    var coursJeudi: Array<string>;
-                    var coursVendredi: Array<string>;
-                    var schedule: Array<Number>;
-
-                    days = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi'];
-
-                    coursLundi = ["<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>"];
-                    coursMardi = ["<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>"];
-                    coursMercredi = ["<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>"];
-                    coursJeudi = ["<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>"];
-                    coursVendredi = ["<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>","<td></td>"];
-
-                    let html = "<table><tr><th>Lundi</th><th>Mardi</th><th>Mercredi</th><th>Jeudi</th><th>Vendredi</th></tr>"; 
-                    days.forEach(day => {
-                        response.data.forEach(data => {
-                            schedule = [data.h01,data.h02,data.h03,data.h04,data.h05,data.h06,data.h07,data.h08,data.h09,data.h10,data.h11,data.h12];
-                           switch (data.day) {
-                               case "lundi":
-                                   for (let index = 0; index < schedule.length; index++) {
-                                       if (schedule[index] == 1) {
-                                           coursLundi[index]= "<td>" + data.name + "</td>";
-                                       } 
-                                   }
-                                   break;
-                                   case "mardi":
-                                    for (let index = 0; index < schedule.length; index++) {
-                                        if (schedule[index] == 1) {
-                                            coursMardi[index]= "<td>" + data.name + "</td>";
-                                        } 
-                                    }
-                                    break;
-                                    case "mercredi":
-                                        for (let index = 0; index < schedule.length; index++) {
-                                            if (schedule[index] == 1) {
-                                                coursMercredi[index]= "<td>" + data.name + "</td>";
-                                            } 
-                                        }
-                                   break;
-                                   case "jeudi":
-                                    for (let index = 0; index < schedule.length; index++) {
-                                        if (schedule[index] == 1) {
-                                            coursJeudi[index]= "<td>" + data.name + "</td>";
-                                        } 
-                                    }
-                                   break;
-                                   case "vendredi":
-                                    for (let index = 0; index < schedule.length; index++) {
-                                        if (schedule[index] == 1) {
-                                            coursVendredi[index]= "<td>" + data.name + "</td>";
-                                        } 
-                                    }
-                                   break;
-                           
-                               default:
-                                   break;
-                           }
-                        });
-                    });
-                    for (let index = 0; index < 12; index++) {
-                        html+="<tr><td>H"+index+"</td>";
-                        html+=coursLundi[index]
-                        html+=coursMardi[index]
-                        html+=coursMercredi[index]
-                        html+=coursJeudi[index]
-                        html+=coursVendredi[index]
-                        html+="</tr>";           
-                    }
-                    html+="</table>";
                     console.log(response);
-                    document.getElementById("Schedule_ul").innerHTML = html;
+                    // Clear schedule
+                    this.scheduleGrid.innerHTML = '';
+                    for (let hour = 1; hour <= this.NB_LESSONS_PER_DAY; hour++){
+                        let row = document.createElement('tr');
+                        this.DAYS.forEach((day, index) => {
+                            let cell = document.createElement('td');
+                            let hour_key = `h${hour < 10 ? '0' : ''}${hour}`;
+                            let lesson = _.find(response.data, foo => {
+                                return foo.day === day && foo[hour_key] === 1;
+                            });
+                            if(lesson != undefined && lesson != null)
+                                cell.innerText = lesson.name;
+                            row.appendChild(cell);
+                        });
+                        this.scheduleGrid.appendChild(row);
+                    }
                 },
                 error => {
                     console.error(error);

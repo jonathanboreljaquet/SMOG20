@@ -49,7 +49,6 @@ export default class Engine {
     }
 
     private changeScene(newScene: Scene): void {
-        console.log("CLICK BUTTON");
         let oldScene = this.currentScene;
         oldScene.onSceneChange.detach();
         newScene.onSceneChange.attach((item) => this.changeScene(item));

@@ -14,7 +14,7 @@
 </head>
 
 <body>
-
+    <!-- Nav -->
     <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <a class="navbar-item" href="http://smog20.test" id="sidebar_link_floors_scene">
@@ -39,8 +39,8 @@
 
                     </div>
                 </div>
-                <a class="navbar-item" onclick="openModal()">
-                    open modal
+                <a class="navbar-item" id="schedule_modale_button" ">
+                    Horaire
                 </a>
             </div>
 
@@ -48,9 +48,85 @@
         </div>
     </nav>
 
+    <!-- Schedule -->
+    <div id="schedule_container" class="schedule_container">
+        <p>
+            <button id="close_schedule_button" class="button is-small">
+                <span class="icon is-small">
+                    <i class="fas fa-times"></i>
+                </span>
+            </button>
+        </p>
+        <div class="table-container">
+            <table class="table is-bordered is-striped is-narrow is-hoverable">
+                <thead>
+                    <tr>
+                        <th>Lundi</th>
+                        <th>Mardi</th>
+                        <th>Mercredi</th>
+                        <th>Jeudi</th>
+                        <th>Vendredi</th>
+                    </tr>
+                </thead>
+                <tbody id="schedule_grid">
+                    <tr>
+                        <td></td>
+                        <td>Techniciens POW</td>
+                        <td>Techniciens PDA</td>
+                        <td>Techniciens Travaux techniciens</td>
+                        <td>Techniciens POO</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Techniciens POW</td>
+                        <td>Techniciens PDA</td>
+                        <td>Techniciens Travaux techniciens</td>
+                        <td>Techniciens POO</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Techniciens POW</td>
+                        <td>Techniciens PDA</td>
+                        <td>Techniciens Travaux techniciens</td>
+                        <td>Techniciens POO</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Techniciens POW</td>
+                        <td>Techniciens PDA</td>
+                        <td>Techniciens Travaux techniciens</td>
+                        <td>Techniciens POO</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Techniciens POW</td>
+                        <td>Techniciens PDA</td>
+                        <td>Techniciens Travaux techniciens</td>
+                        <td>Techniciens POO</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Techniciens POW</td>
+                        <td>Techniciens PDA</td>
+                        <td>Techniciens Travaux techniciens</td>
+                        <td>Techniciens POO</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Techniciens POW</td>
+                        <td>Techniciens PDA</td>
+                        <td>Techniciens Travaux techniciens</td>
+                        <td>Techniciens POO</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-
+    <!-- Canvas -->
     <canvas id="renderCanvas" style="z-index: 1;position:absolute; margin-top:0px; "></canvas>
+
+    <!-- Scripts -->
     <script src="bundle.js"></script>
 
     <div class="modal" id="modal">
@@ -69,9 +145,6 @@
                 <button class="button" onclick="closeModal()">Cancel</button>
             </footer>
         </div>
-    </div>
-    <div>
-
     </div>
     <script>
         function closeModal() {

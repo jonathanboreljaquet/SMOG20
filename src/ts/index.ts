@@ -5,19 +5,18 @@ import ENV from "./environnement";
 import "@fortawesome/fontawesome-free/js/all.js";
 import * as moment from "moment";
 import { int } from "babylonjs";
+import './libraries/schedule';
 
 let canvas = document.getElementById("renderCanvas") as HTMLCanvasElement;
 let engine = new Engine(canvas);
 
 getBuildings();
-getSchedule(9,11);
 function getBuildings(): void {
-    
+
         axios
             .post(ENV.API_ENDPOINT + "buildings")
             .then(
                 response => {
-                    console.log(response);
                     let dropdown = document.getElementById("link_batiment");
                     dropdown.innerHTML = '';
                     for (let building of response.data) {
@@ -25,6 +24,7 @@ function getBuildings(): void {
                         link.classList.add('dropdown-item');
                         link.innerText = building.name;
                         link.addEventListener('click', () => {
+                            document.getElementById('schedule_modale_button').style.display = 'none';
                             engine.loadBuilding(building.id);
                         });
                         dropdown.appendChild(link);
@@ -35,30 +35,6 @@ function getBuildings(): void {
                 }
             );
 }
-function getSchedule(classroom_id: number,nbr_week :number): void {
-    axios
-        .post(ENV.API_ENDPOINT + "schedule", {
-            classroom_id: classroom_id,
-            nbr_week: nbr_week,
-        })
-        .then(
-            (response) => {
-                console.log(response);
-                let html = "";
-                for (let index = 0; index < response.data.length; index++) {
-                    html +=
-                        '<li> ' +
-                        response.data[index].day +
-                        " </li>";
-                }
-                document.getElementById("Schedule_ul").innerHTML = html;
-            },
-            error => {
-                console.error(error);
-            }
-        );
-}
-
 
 
 
