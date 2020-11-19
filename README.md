@@ -58,6 +58,10 @@ Projet permettant aux
 
 `composer install`: Install les dépendances PHP
 
+`php artisan migrate`: Exécute les migrations
+
+`php artisan insert_data`: Insère les données dans la base
+
 `npm run prod`: Compile le code source (typescript + scss) de l 'application avec minification et norme ES5
 
 `npm run dev`: Compile le code source (typescript + scss) de l'application avec sourcemaps et watcher
