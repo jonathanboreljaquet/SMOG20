@@ -49,7 +49,7 @@
     </nav>
 
     <!-- Schedule -->
-    <div id=" schedule_container" class="schedule_container">
+    <div id="schedule_container" class="schedule_container">
                     <p>
                         <button id="close_schedule_button" class="button is-small">
                             <span class="icon is-small">
