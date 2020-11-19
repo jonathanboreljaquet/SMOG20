@@ -1,5 +1,8 @@
 # Projet SMOG20
 
+## Demo
+https://smog20.sthl.ch/
+
 ## Équipe 
 #### Bauduccio Lorenzo, <lorenzo.bdcc@eduge.ch>
 #### Stahli Jules, <jules.sthl@eduge.ch>
