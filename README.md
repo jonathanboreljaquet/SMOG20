@@ -49,6 +49,8 @@ Projet permettant aux
 
 4. Utilisez la clé que vous venez de récupérer comme nouvelle valeur pour la variable **APP_KEY** du fichier **.env**
 5. Renseignez les informations de connexion à la base de données dans les variables correspondantes _(DB\_...)_ du fichier **.env**
+6. Exécutez les migrations avec la commande `php artisan migrate`
+7. Insérez les données dans la base de données avec la commande `php artisan insert_data`
 
 ## Commandes
 
