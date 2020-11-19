@@ -1,0 +1,36 @@
+@startgantt
+[Cahier des charges] lasts 1 days
+[Création MCD] lasts 1 days
+[Création des migrations + modèles] lasts 1 days
+[Modélisation des étages du bâtiment rhône] lasts 1 days
+[Modélisation du bâtiment Rhône] lasts 1 days
+[Création des scènes vides] lasts 1 days
+[Photos 360] lasts 1 days
+[Implémentation scène bâtiments] lasts 3 days
+[Implémentation scène étages] lasts 3 days
+[Poster] lasts 1 days
+[Implémentation scène salle] lasts 2 days
+[Navbar principale] lasts 1 days
+[Import CSV] lasts 2 days
+[Affichage des horaires d'une salle] lasts 2 days
+[Mise en ligne de l'application] lasts 1 days
+[Documentation technique] lasts 10 days
+[Journal de bord] lasts 10 days
+
+[Cahier des charges] --> [Modélisation des étages du bâtiment rhône]
+[Création des migrations + modèles] --> [Modélisation des étages du bâtiment rhône]
+[Création MCD] --> [Modélisation des étages du bâtiment rhône]
+[Cahier des charges] --> [Modélisation du bâtiment Rhône]
+[Création des migrations + modèles] --> [Modélisation du bâtiment Rhône]
+[Création MCD] --> [Modélisation du bâtiment Rhône]
+[Modélisation du bâtiment Rhône] --> [Création des scènes vides]
+[Création des scènes vides] --> [Photos 360]
+[Modélisation du bâtiment Rhône] --> [Implémentation scène bâtiments]
+[Modélisation du bâtiment Rhône] --> [Implémentation scène étages]
+[Modélisation du bâtiment Rhône] --> [Implémentation scène salle]
+[Création des scènes vides] --> [Poster]
+[Implémentation scène salle] --> [Navbar principale]
+[Navbar principale] --> [Import CSV]
+[Import CSV] --> [Affichage des horaires d'une salle]
+[Affichage des horaires d'une salle] --> [Mise en ligne de l'application]
+@endgantt
