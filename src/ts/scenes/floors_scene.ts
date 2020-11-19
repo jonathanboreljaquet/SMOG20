@@ -7,6 +7,7 @@ import Helpers from '../libraries/helpers';
 import * as GUI from 'babylonjs-gui';
 import * as ANIMATIONS from '../animations';
 import * as _ from 'lodash';
+import { Color4 } from 'babylonjs';
 
 // Constants
 
@@ -234,11 +235,12 @@ export default class FloorsScene extends Scene{
      * @private
      */
     private addUi(): void{
-        let buttonUp: GUI.Button = GUI.Button.CreateSimpleButton('buttonUp', '🔼');
+        let buttonUp: GUI.Button = GUI.Button.CreateImageButton('buttonUp', '',ENV.IMAGE_FOLDER+'up-arrow.png');
         buttonUp.width = BUTTON_UP_WIDTH;
         buttonUp.height = BUTTON_UP_HEIGHT;
-        buttonUp.color = BUTTON_UP_TEXT_COLOR;
-        buttonUp.fontSize = BUTTON_UP_FONT_SIZE;
+        buttonUp.image.width = BUTTON_DOWN_WIDTH;
+        buttonUp.image.height = BUTTON_DOWN_HEIGHT;
+        buttonUp.thickness = 0;
 
         buttonUp.onPointerClickObservable.add(state => {
             this.changeFloor(this.currentFloorIndex - 1);
@@ -250,11 +252,12 @@ export default class FloorsScene extends Scene{
         text.height = CURRENT_FLOOR_LABEL_HEIGHT;
         text.fontSize = CURRENT_FLOOR_lABEL_FONT_SIZE;
 
-        let buttonDown: GUI.Button = GUI.Button.CreateSimpleButton('buttonDown', '🔽');
+        let buttonDown: GUI.Button = GUI.Button.CreateImageButton('buttonDown', '',ENV.IMAGE_FOLDER+'down-arrow.png');
         buttonDown.width = BUTTON_DOWN_WIDTH;
         buttonDown.height = BUTTON_DOWN_HEIGHT;
-        buttonDown.color = BUTTON_DOWN_TEXT_COLOR;
-        buttonDown.fontSize = BUTTON_DOWN_FONT_SIZE;
+        buttonDown.image.width = BUTTON_DOWN_WIDTH;
+        buttonDown.image.height = BUTTON_DOWN_HEIGHT;
+        buttonDown.thickness = 0;
 
         buttonDown.onPointerClickObservable.add(state => {
            this.changeFloor(this.currentFloorIndex + 1);

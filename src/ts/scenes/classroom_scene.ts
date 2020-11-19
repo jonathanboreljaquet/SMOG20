@@ -67,14 +67,16 @@ export default class ClassroomScene extends Scene{
         dome.imageMode= BABYLON.PhotoDome.MODE_MONOSCOPIC;
 
         var advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-        var button = GUI.Button.CreateSimpleButton(
-            "button_go_back",
-            "Return"
-          );
-        button.height = "40px";
-        button.color = "white";
-        button.background = "black";
-        button.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+        var button = GUI.Button.CreateImageButton('buttonUp', '',ENV.IMAGE_FOLDER+'left-arrow.png');
+        button.height = "60px";
+        button.width = "60px";
+        button.image.height = "60px";
+        button.image.width = "60px";
+        button.thickness = 0;
+        button.left = 10;
+        button.top = 10;
+        button.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+        button.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT
         button.onPointerDownObservable.add(() => {
             this.scheduleButton.style.display = 'none';
             previousScene.keep = true;
