@@ -17,7 +17,7 @@
     <!-- Nav -->
     <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-            <a class="navbar-item" href="http://smog20.test" id="sidebar_link_floors_scene">
+            <a class="navbar-item" href="http://smog20.sthl.ch" id="sidebar_link_floors_scene">
                 <h1 class="is-1">Smog 20</h1>
             </a>
 
@@ -49,36 +49,37 @@
     </nav>
 
     <!-- Schedule -->
-    <div id="schedule_container" class="schedule_container">
-        <p>
-            <button id="close_schedule_button" class="button is-small">
-                <span class="icon is-small">
-                    <i class="fas fa-times"></i>
-                </span>
-            </button>
-        </p>
-        <div class="table-container">
-            <table class="table is-bordered is-striped is-narrow is-hoverable">
-                <thead>
-                    <tr>
-                        <th>Lundi</th>
-                        <th>Mardi</th>
-                        <th>Mercredi</th>
-                        <th>Jeudi</th>
-                        <th>Vendredi</th>
-                    </tr>
-                </thead>
-                <tbody id="schedule_grid">
+    <div id=" schedule_container" class="schedule_container">
+                    <p>
+                        <button id="close_schedule_button" class="button is-small">
+                            <span class="icon is-small">
+                                <i class="fas fa-times"></i>
+                            </span>
+                        </button>
+                    </p>
+                    <div class="table-container">
+                        <table class="table is-bordered is-striped is-narrow is-hoverable">
+                            <thead>
+                                <tr>
+                                    <th>Lundi</th>
+                                    <th>Mardi</th>
+                                    <th>Mercredi</th>
+                                    <th>Jeudi</th>
+                                    <th>Vendredi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="schedule_grid">
 
-                </tbody>
-            </table>
-        </div>
-    </div>
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
 
-    <!-- Canvas -->
-    <canvas id="renderCanvas" style="z-index: 1;position:absolute; margin-top:0px; "></canvas>
+            <!-- Canvas -->
+            <canvas id="renderCanvas" style="z-index: 1;position:absolute; margin-top:0px; "></canvas>
 
-    <!-- Scripts -->
-    <script src="bundle.js"></script>
+            <!-- Scripts -->
+            <script src="bundle.js"></script>
 </body>
+
 </html>
